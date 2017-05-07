@@ -21,7 +21,7 @@
 
 package Model;
 
-import Model.account.Account;
+import Model.account.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,27 +35,17 @@ public class Bank {
     private Vector<Account> accounts;
     private Vector<manipulation> suspended;
 
+    public static Date parseDate(String s) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+        try {
+            return dateFormat.parse(s);
+        } catch (ParseException e) {
+            throw new ParseException("Input can not be parsed to a Date", e.getErrorOffset());
+        }
+    }
+
     public int clearFund() {
         // TODO - implement Model.Bank.clearFund
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * @param accountNumber
-     * @param pin
-     * @param amount
-     */
-    public int withdraw(int accountNumber, int pin, double amount) {
-        // TODO - implement Model.Bank.withdraw
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * @param accountNumber
-     * @param amount
-     */
-    public int instanceDeposit(int accountNumber, double amount) {
-        // TODO - implement Model.Bank.instanceDeposit
         throw new UnsupportedOperationException();
     }
 
@@ -81,9 +71,26 @@ public class Bank {
      * @param birthday
      * @param accountType
      */
-    public boolean openAccount(double money, String name, String address, Date birthday, String accountType) {
-        // TODO - implement Model.Bank.openAccount
-        throw new UnsupportedOperationException();
+    public Account openAccount(double money, String name, String address, Date birthday, String accountType) throws Exception {
+        Account temp = null;
+        if (Account.checkCredit()) {
+            if (accountType.equals("CurrentAccount")) {
+                temp = new CurrentAccount(accountNumber, money, name, address, birthday);
+                accounts.add(temp);
+            } else if (accountType.equals("JuniorAccount")) {
+                if (JuniorAccount.checkAge(birthday)) {
+                    temp = new JuniorAccount(accountNumber, money, name, address, birthday);
+                    accounts.add(temp);
+                } else {
+                    throw new OverAgeException("Age over 18");
+                }
+            } else if (accountType.equals("SaverAccount")) {
+                temp = new SaverAccount(accountNumber, money, name, address, birthday);
+                accounts.add(temp);
+            }
+            accountNumber++;
+        }
+        return temp;
     }
 
     /**
@@ -103,13 +110,12 @@ public class Bank {
         throw new UnsupportedOperationException();
     }
 
-
-    public static Date parseDate(String s) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
-        try {
-            return dateFormat.parse(s);
-        } catch (ParseException e) {
-            throw new ParseException("Input can not be parsed to a Date", e.getErrorOffset());
+    public Account findAccountByID(int accountNumber) {
+        for (Account account : accounts) {
+            if (account.getAccountNumber() == accountNumber) {
+                return account;
+            }
         }
+        return null;
     }
 }

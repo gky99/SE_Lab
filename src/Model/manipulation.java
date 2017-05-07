@@ -25,7 +25,7 @@ import java.util.Date;
 
 public class manipulation {
     private final Date createTime = new Date();
-    ;
+
     private final int origin;
     private final double money;
     private final int destination;
@@ -34,6 +34,7 @@ public class manipulation {
     private Date subscribeTime;
     private String result;
 
+
     public manipulation(int origin, int destination, double money) {
         this.origin = origin;
         this.destination = destination;
@@ -41,12 +42,12 @@ public class manipulation {
         this.changeFlag = true;
     }
 
-    public manipulation(int origin, double money, int destination, boolean changeFlag, Date subscribeTime) {
-        this.subscribeTime = subscribeTime;
+    public manipulation(int origin, double money, int destination, Date subscribeTime) {
         this.origin = origin;
         this.money = money;
         this.destination = destination;
-        this.changeFlag = changeFlag;
+        this.subscribeTime = subscribeTime;
+        this.changeFlag = true;
     }
 
     private void setFinishTime() throws Exception {

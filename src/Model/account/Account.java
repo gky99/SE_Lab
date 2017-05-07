@@ -51,6 +51,11 @@ public abstract class Account {
         this.suspend = false;
     }
 
+    public static boolean checkCredit() {
+
+        return true;
+    }
+
     /**
      * @param man
      */
@@ -83,11 +88,6 @@ public abstract class Account {
             money -= man.getMoney();
             return this.money;
         }
-    }
-
-    public boolean checkCredit() {
-
-        return true;
     }
 
     public boolean setSuspend() {

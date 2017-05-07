@@ -26,10 +26,11 @@ import Model.Bank;
 import java.util.Date;
 
 public class CurrentAccount extends Account implements Overdraftable {
-    double overdraftLimit;
+    private double overdraftLimit;
 
     public CurrentAccount(int accountNum, double money, String name, String address, Date birthday) {
         super(accountNum, money, name, address, birthday);
+        this.overdraftLimit = 0;
     }
 
     public static void main(String[] args) throws Exception {

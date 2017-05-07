@@ -30,7 +30,7 @@ import java.util.Vector;
 
 public class SaverAccount extends Account {
 
-    private static int minSubscribeTime;
+    private static int minSubscribeTime = 5;
     private Vector<manipulation> subscription;
 
     public SaverAccount(int accountNum, double money, String name, String address, Date birthday) {
@@ -45,7 +45,7 @@ public class SaverAccount extends Account {
 
         createTime.add(Calendar.DATE, minSubscribeTime);
         if (createTime.before(subscribeTime)) {
-
+            subscription.add(man);
         }
     }
 
