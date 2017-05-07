@@ -21,8 +21,6 @@
 
 package Model.account;
 
-import Model.manipulation;
-
 import java.util.Date;
 
 public abstract class Account {
@@ -57,23 +55,23 @@ public abstract class Account {
     }
 
     /**
-     * @param man
+     * @param count
      */
-    public double save(manipulation man) throws Exception {
+    public double save(double count) throws Exception {
 
         this.getClass().isInterface();
         if (suspend) {
             throw new AccountSuspendedException("Account is suspended.");
         } else {
-            this.money += man.getMoney();
+            this.money += count;
             return this.money;
         }
     }
 
     /**
-     * @param man
+     * @param count
      */
-    public double draw(manipulation man) throws Exception {
+    public double draw(double count) throws Exception {
         if (suspend) {
             throw new AccountSuspendedException("Account is suspended.");
         } else {
@@ -82,10 +80,10 @@ public abstract class Account {
                 ((Overdraftable) this).getOverdraftLimit();
             }
 
-            if (money + overdraftLimit < man.getMoney()) {
+            if (money + overdraftLimit < count) {
                 throw new OverdraftException("Out of overdraft boundary.");
             }
-            money -= man.getMoney();
+            money -= count;
             return this.money;
         }
     }

@@ -21,32 +21,36 @@
 
 package Model.account;
 
-import Model.Manipulation;
-
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Vector;
 
-public class SaverAccount extends Account {
-
-    private static int minSubscribeTime = 5;
-    private Vector<Manipulation> subscription;
-
-    public SaverAccount(int accountNum, double money, String name, String address, Date birthday) {
-        super(accountNum, money, name, address, birthday);
+/**
+ * Created by gky on 2017/5/7.
+ */
+public class VirtualAccount extends Account{
+    public VirtualAccount(int accountNumber, double money, String name, String address, Date birthday) {
+        super(accountNumber, money, name, address, birthday);
     }
 
-    public void subscribe(Manipulation man) {
-        Calendar createTime = new GregorianCalendar();
-        createTime.setTime(man.getCreateTime());
-        Calendar subscribeTime = new GregorianCalendar();
-        subscribeTime.setTime(man.getSubscribeTime());
-
-        createTime.add(Calendar.DATE, minSubscribeTime);
-        if (createTime.before(subscribeTime)) {
-            subscription.add(man);
-        }
+    public VirtualAccount(int accountNumber, String name) {
+        this(accountNumber, 99999, name, null, null);
     }
 
+
+    @Override
+    public double draw(double count) throws Exception {
+        return super.draw(0);
+    }
+
+    @Override
+    public double save(double count) throws Exception {
+        return super.save(0);
+    }
+
+    @Override
+    public boolean setSuspend() {
+        if (isSuspend()) {
+            return super.setSuspend();
+        } else
+            return isSuspend();
+    }
 }

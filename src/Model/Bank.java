@@ -31,9 +31,16 @@ import java.util.Vector;
 
 public class Bank {
 
-    private int accountNumber = 1;
-    private Vector<Account> accounts;
-    private Vector<manipulation> suspended;
+    private static int accountNumber = 1;
+    public static Vector<Account> accounts;
+    public static Vector<Manipulation> manipulations;
+    public static Vector<Manipulation> suspended;
+
+    static {
+        Bank.accounts = new Vector<Account>();
+        Bank.manipulations = new Vector<Manipulation>();
+        Bank.suspended = new Vector<Manipulation>();
+    }
 
     public static Date parseDate(String s) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
@@ -44,23 +51,13 @@ public class Bank {
         }
     }
 
-    public int clearFund() {
+    public static int clearFund() {
         // TODO - implement Model.Bank.clearFund
         throw new UnsupportedOperationException();
     }
 
-    public int closeAccount() {
+    public static int closeAccount() {
         // TODO - implement Model.Bank.closeAccount
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * @param origin
-     * @param destination
-     * @param amount
-     */
-    public boolean transfer(int origin, int destination, double amount) {
-        // TODO - implement Model.Bank.transfer
         throw new UnsupportedOperationException();
     }
 
@@ -76,17 +73,17 @@ public class Bank {
         if (Account.checkCredit()) {
             if (accountType.equals("CurrentAccount")) {
                 temp = new CurrentAccount(accountNumber, money, name, address, birthday);
-                accounts.add(temp);
+                Bank.accounts.add(temp);
             } else if (accountType.equals("JuniorAccount")) {
                 if (JuniorAccount.checkAge(birthday)) {
                     temp = new JuniorAccount(accountNumber, money, name, address, birthday);
-                    accounts.add(temp);
+                    Bank.accounts.add(temp);
                 } else {
                     throw new OverAgeException("Age over 18");
                 }
             } else if (accountType.equals("SaverAccount")) {
                 temp = new SaverAccount(accountNumber, money, name, address, birthday);
-                accounts.add(temp);
+                Bank.accounts.add(temp);
             }
             accountNumber++;
         }
@@ -110,8 +107,8 @@ public class Bank {
         throw new UnsupportedOperationException();
     }
 
-    public Account findAccountByID(int accountNumber) {
-        for (Account account : accounts) {
+    public static Account findAccountByID(int accountNumber) {
+        for (Account account : Bank.accounts) {
             if (account.getAccountNumber() == accountNumber) {
                 return account;
             }

@@ -21,9 +21,21 @@
 
 package Model;
 
-import java.util.Date;
+import Model.account.Account;
 
-public class manipulation {
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+public class Manipulation {
+    private static final Map<Integer, String> virtualAccounts;
+
+    static {
+        virtualAccounts = new HashMap<Integer, String>();
+        virtualAccounts.put(-1, "cash");
+        virtualAccounts.put(-2, "cheque");
+    }
+
     private final Date createTime = new Date();
 
     private final int origin;
@@ -35,19 +47,44 @@ public class manipulation {
     private String result;
 
 
-    public manipulation(int origin, int destination, double money) {
+    public Manipulation(int origin, int destination, double money) {
         this.origin = origin;
         this.destination = destination;
         this.money = money;
         this.changeFlag = true;
+
+        Bank.manipulations.add(this);
     }
 
-    public manipulation(int origin, double money, int destination, Date subscribeTime) {
-        this.origin = origin;
-        this.money = money;
-        this.destination = destination;
+    public Manipulation(int origin, int destination, double money, Date subscribeTime) {
+        this(origin, destination, money);
         this.subscribeTime = subscribeTime;
-        this.changeFlag = true;
+
+        Bank.suspended.add(this);
+    }
+
+    public boolean execute() throws Exception {
+        if (origin < 0) {
+            if (destination < 0) {
+
+            } else {
+
+            }
+
+
+        } else {
+            if (destination < 0) {
+
+            } else {
+
+            }
+        }
+        Account origin = Bank.findAccountByID(this.origin);
+        Account destination = Bank.findAccountByID(this.destination);
+
+        origin.draw(money);
+        destination.save(money);
+
     }
 
     private void setFinishTime() throws Exception {
