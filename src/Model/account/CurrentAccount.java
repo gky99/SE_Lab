@@ -24,7 +24,7 @@ package Model.account;
 import java.util.Date;
 
 public class CurrentAccount extends Account {
-    public CurrentAccount(double money, String name, String address, Date birthday) {
-        super(money, name, address, birthday);
+    public CurrentAccount(int accountNum, double money, String name, String address, Date birthday) {
+        super(accountNum, money, name, address, birthday);
     }
 }

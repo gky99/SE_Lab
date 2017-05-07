@@ -27,11 +27,12 @@ import java.util.Date;
 
 public abstract class Account {
 
+    private final int accountNumber;
+
     private double money = 0;
     private String name;
     private String address;
     private Date birthday;
-    private int accountNumber;
     private double overdraftLimit;
     private boolean suspend;
 
@@ -41,30 +42,93 @@ public abstract class Account {
      * @param address
      * @param birthday
      */
-    public Account(double money, String name, String address, Date birthday) {
-        // TODO - implement Account.Account
-        throw new UnsupportedOperationException();
+    public Account(int accountNumber, double money, String name, String address, Date birthday) {
+        this.accountNumber = accountNumber;
+        this.money = money;
+        this.name = name;
+        this.address = address;
+        this.birthday = birthday;
+        this.overdraftLimit = 0;
+        this.suspend = false;
     }
 
     /**
      * @param man
      */
-    public int save(manipulation man) {
-        // TODO - implement Account.save
-        throw new UnsupportedOperationException();
+    public double save(manipulation man) throws Exception{
+        if (suspend) {
+            throw new AccountSuspendedException("Account is suspended.");
+        } else {
+            this.money += man.getMoney();
+            return this.money;
+        }
     }
 
     /**
      * @param man
      */
-    public int draw(manipulation man) {
-        // TODO - implement Account.draw
-        throw new UnsupportedOperationException();
+    public double draw(manipulation man) throws Exception{
+        if (suspend) {
+            throw new AccountSuspendedException("Account is suspended.");
+        } else {
+            if (money+overdraftLimit < man.getMoney()) {
+                throw new OverdraftException("Out of overdraft boundary.");
+            }
+            money -= man.getMoney();
+            return this.money;
+        }
     }
 
     public boolean checkCredit() {
-        // TODO - implement Account.checkCredit
-        throw new UnsupportedOperationException();
+
+        return true;
     }
 
+    public void setOverdraftLimit(double overdraftLimit) {
+        this.overdraftLimit = overdraftLimit;
+    }
+
+    public boolean setSuspend() {
+        return suspend = !suspend;
+    }
+
+    public int getAccountNumber() {
+        return accountNumber;
+    }
+
+    public double getMoney() {
+        return money;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public double getOverdraftLimit() {
+        return overdraftLimit;
+    }
+
+    public boolean isSuspend() {
+        return suspend;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
 }

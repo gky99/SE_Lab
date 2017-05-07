@@ -21,14 +21,67 @@
 
 package Model;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class manipulation {
-    private Date time;
-    private int origin;
-    private double money;
-    private int destination;
-    private boolean subscribe;
+    private final Date createTime;
+    private Date finishTime;
+    private final int origin;
+    private final double money;
+    private final int destination;
+    private final boolean subscribe;
     private String result;
+    private final boolean changeFlag;
 
+    public manipulation(int origin, int destination, double money, boolean subscribe) {
+        this.origin = origin;
+        this.destination = destination;
+        this.money = money;
+        this.subscribe = subscribe;
+        this.changeFlag = true;
+
+        this.createTime = new Date();
+    }
+
+    private void setFinishTime() throws Exception{
+        if (changeFlag) {
+            this.finishTime = new Date();
+        } else {
+            throw new UnchangeableException("Manipulation already finished.");
+        }
+    }
+
+    public void setResult(String result) throws Exception{
+        if (changeFlag) {
+            this.result = result;
+            setFinishTime();
+        } else {
+            throw new UnchangeableException("Manipulation already finished.");
+        }
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public Date getFinishTime() {
+        return finishTime;
+    }
+
+    public int getOrigin() {
+        return origin;
+    }
+
+    public double getMoney() {
+        return money;
+    }
+
+    public int getDestination() {
+        return destination;
+    }
+
+    public String getResult() {
+        return result;
+    }
 }

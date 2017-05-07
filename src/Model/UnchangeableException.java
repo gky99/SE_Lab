@@ -19,21 +19,16 @@
  *
  */
 
-package Model.account;
+package Model;
 
-import java.util.Date;
-
-public class JuniorAccount extends Account {
-    public JuniorAccount(int accountNum, double money, String name, String address, Date birthday) {
-        super(accountNum, money, name, address, birthday);
+/**
+ * Created by gky on 2017/5/7.
+ */
+public class UnchangeableException extends Exception {
+    public UnchangeableException() {
     }
 
-    /**
-     * @param age
-     */
-    public boolean checkAge(int age) {
-        // TODO - implement JuniorAccount.checkAge
-        throw new UnsupportedOperationException();
+    public UnchangeableException(String message) {
+        super(message);
     }
-
 }

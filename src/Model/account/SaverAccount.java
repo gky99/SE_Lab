@@ -30,8 +30,8 @@ public class SaverAccount extends Account {
 
     private Vector<manipulation> subscription;
 
-    public SaverAccount(double money, String name, String address, Date birthday) {
-        super(money, name, address, birthday);
+    public SaverAccount(int accountNum, double money, String name, String address, Date birthday) {
+        super(accountNum, money, name, address, birthday);
     }
 
     public void subscribe() {
