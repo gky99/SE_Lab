@@ -22,20 +22,13 @@
 package Model;
 
 import Model.account.Account;
+import Model.account.SaverAccount;
+import Model.exceptions.IllegalTimeException;
+import Model.exceptions.UnchangeableException;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Manipulation {
-    private static final Map<Integer, String> virtualAccounts;
-
-    static {
-        virtualAccounts = new HashMap<Integer, String>();
-        virtualAccounts.put(-1, "cash");
-        virtualAccounts.put(-2, "cheque");
-    }
-
     private final Date createTime = new Date();
 
     private final int origin;
@@ -56,38 +49,42 @@ public class Manipulation {
         Bank.manipulations.add(this);
     }
 
-    public Manipulation(int origin, int destination, double money, Date subscribeTime) {
+    public Manipulation(int origin, int destination, double money, Date subscribeTime) throws IllegalTimeException{
         this(origin, destination, money);
         this.subscribeTime = subscribeTime;
 
-        Bank.suspended.add(this);
+        Account account = Bank.findAccountByID(origin);
+        if (account instanceof SaverAccount) {
+            ((SaverAccount) account).subscribe(this);
+        } else {
+            if (subscribeTime.after(new Date())) {
+                Bank.suspended.add(this);
+            } else {
+                throw new  IllegalTimeException("Illegal subscribe time. Subscribed time already passes");
+            }
+        }
     }
 
     public boolean execute() throws Exception {
-        if (origin < 0) {
-            if (destination < 0) {
-
-            } else {
-
-            }
-
-
-        } else {
-            if (destination < 0) {
-
-            } else {
-
-            }
+        if (subscribeTime.after(new Date())) {
+            return false;
         }
-        Account origin = Bank.findAccountByID(this.origin);
-        Account destination = Bank.findAccountByID(this.destination);
+        try {
+            Account origin = Bank.findAccountByID(this.origin);
+            Account destination = Bank.findAccountByID(this.destination);
 
-        origin.draw(money);
-        destination.save(money);
+            origin.draw(money);
+            destination.save(money);
 
+            return true;
+        } catch () {
+
+        } finally {
+            return false;
+        }
     }
 
-    private void setFinishTime() throws Exception {
+    private void setFinishTime() throws UnchangeableException {
         if (changeFlag) {
             this.finishTime = new Date();
         } else {
@@ -119,7 +116,7 @@ public class Manipulation {
         return result;
     }
 
-    public void setResult(String result) throws Exception {
+    public void setResult(String result) throws UnchangeableException {
         if (changeFlag) {
             this.result = result;
             setFinishTime();

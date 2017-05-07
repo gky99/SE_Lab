@@ -19,16 +19,16 @@
  *
  */
 
-package Model.account;
+package Model.exceptions;
 
 /**
  * Created by gky on 2017/5/7.
  */
-public class NoAccountException extends NullPointerException {
-    public NoAccountException() {
+public class UnchangeableException extends Exception {
+    public UnchangeableException() {
     }
 
-    public NoAccountException(String message) {
+    public UnchangeableException(String message) {
         super(message);
     }
 }

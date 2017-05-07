@@ -21,6 +21,9 @@
 
 package Model.account;
 
+import Model.exceptions.AccountSuspendedException;
+import Model.exceptions.OverdraftException;
+
 import java.util.Date;
 
 public abstract class Account {
@@ -57,7 +60,7 @@ public abstract class Account {
     /**
      * @param count
      */
-    public double save(double count) throws Exception {
+    public double save(double count) throws AccountSuspendedException {
 
         this.getClass().isInterface();
         if (suspend) {
@@ -71,7 +74,7 @@ public abstract class Account {
     /**
      * @param count
      */
-    public double draw(double count) throws Exception {
+    public double draw(double count) throws AccountSuspendedException, OverdraftException {
         if (suspend) {
             throw new AccountSuspendedException("Account is suspended.");
         } else {

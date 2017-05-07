@@ -22,6 +22,7 @@
 package Model.account;
 
 import Model.Manipulation;
+import Model.exceptions.IllegalTimeException;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -37,15 +38,21 @@ public class SaverAccount extends Account {
         super(accountNum, money, name, address, birthday);
     }
 
-    public void subscribe(Manipulation man) {
+    public void subscribe(Manipulation man) throws IllegalTimeException{
         Calendar createTime = new GregorianCalendar();
         createTime.setTime(man.getCreateTime());
         Calendar subscribeTime = new GregorianCalendar();
         subscribeTime.setTime(man.getSubscribeTime());
 
         createTime.add(Calendar.DATE, minSubscribeTime);
+        createTime.set(Calendar.HOUR_OF_DAY, 0);
+        createTime.set(Calendar.MINUTE, 0);
+        createTime.set(Calendar.SECOND, 0);
+
         if (createTime.before(subscribeTime)) {
             subscription.add(man);
+        } else {
+            throw new IllegalTimeException("Illegal subscribe time. Subscribe time should be "+minSubscribeTime+" days after today.");
         }
     }
 

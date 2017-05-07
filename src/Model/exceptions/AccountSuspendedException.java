@@ -19,7 +19,7 @@
  *
  */
 
-package Model.account;
+package Model.exceptions;
 
 /**
  * Created by gky on 2017/5/7.

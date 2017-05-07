@@ -19,16 +19,16 @@
  *
  */
 
-package Model;
+package Model.exceptions;
 
 /**
  * Created by gky on 2017/5/7.
  */
-public class UnchangeableException extends Exception {
-    public UnchangeableException() {
+public class IllegalTimeException extends Exception {
+    public IllegalTimeException() {
     }
 
-    public UnchangeableException(String message) {
+    public IllegalTimeException(String message) {
         super(message);
     }
 }

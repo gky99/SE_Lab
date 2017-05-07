@@ -22,6 +22,7 @@
 package Model;
 
 import Model.account.*;
+import Model.exceptions.OverAgeException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,6 +41,9 @@ public class Bank {
         Bank.accounts = new Vector<Account>();
         Bank.manipulations = new Vector<Manipulation>();
         Bank.suspended = new Vector<Manipulation>();
+
+        accounts.add(new VirtualAccount(-1, "cash"));
+        accounts.add(new VirtualAccount(-2, "cheque"));
     }
 
     public static Date parseDate(String s) throws ParseException {
@@ -68,7 +72,7 @@ public class Bank {
      * @param birthday
      * @param accountType
      */
-    public Account openAccount(double money, String name, String address, Date birthday, String accountType) throws Exception {
+    public Account openAccount(double money, String name, String address, Date birthday, String accountType) throws OverAgeException {
         Account temp = null;
         if (Account.checkCredit()) {
             if (accountType.equals("CurrentAccount")) {

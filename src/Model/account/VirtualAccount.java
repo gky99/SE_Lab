@@ -37,13 +37,21 @@ public class VirtualAccount extends Account{
 
 
     @Override
-    public double draw(double count) throws Exception {
-        return super.draw(0);
+    public double draw(double count) {
+        try {
+            return super.draw(0);
+        } catch (Exception e) {
+
+        }
     }
 
     @Override
-    public double save(double count) throws Exception {
-        return super.save(0);
+    public double save(double count) {
+        try {
+            return super.save(0);
+        } catch (Exception e) {
+
+        }
     }
 
     @Override
