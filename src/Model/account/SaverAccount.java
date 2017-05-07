@@ -38,7 +38,7 @@ public class SaverAccount extends Account {
         super(accountNum, money, name, address, birthday);
     }
 
-    public void subscribe(Manipulation man) throws IllegalTimeException{
+    public void subscribe(Manipulation man) throws IllegalTimeException {
         Calendar createTime = new GregorianCalendar();
         createTime.setTime(man.getCreateTime());
         Calendar subscribeTime = new GregorianCalendar();
@@ -52,7 +52,7 @@ public class SaverAccount extends Account {
         if (createTime.before(subscribeTime)) {
             subscription.add(man);
         } else {
-            throw new IllegalTimeException("Illegal subscribe time. Subscribe time should be "+minSubscribeTime+" days after today.");
+            throw new IllegalTimeException("Illegal subscribe time. Subscribe time should be " + minSubscribeTime + " days after today.");
         }
     }
 

@@ -26,7 +26,7 @@ import java.util.Date;
 /**
  * Created by gky on 2017/5/7.
  */
-public class VirtualAccount extends Account{
+public class VirtualAccount extends Account {
     public VirtualAccount(int accountNumber, double money, String name, String address, Date birthday) {
         super(accountNumber, money, name, address, birthday);
     }
@@ -43,6 +43,7 @@ public class VirtualAccount extends Account{
         } catch (Exception e) {
 
         }
+        return 0;
     }
 
     @Override
@@ -52,6 +53,7 @@ public class VirtualAccount extends Account{
         } catch (Exception e) {
 
         }
+        return 0;
     }
 
     @Override

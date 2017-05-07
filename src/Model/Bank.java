@@ -32,10 +32,10 @@ import java.util.Vector;
 
 public class Bank {
 
-    private static int accountNumber = 1;
     public static Vector<Account> accounts;
     public static Vector<Manipulation> manipulations;
     public static Vector<Manipulation> suspended;
+    private static int accountNumber = 1;
 
     static {
         Bank.accounts = new Vector<Account>();
@@ -63,6 +63,15 @@ public class Bank {
     public static int closeAccount() {
         // TODO - implement Model.Bank.closeAccount
         throw new UnsupportedOperationException();
+    }
+
+    public static Account findAccountByID(int accountNumber) {
+        for (Account account : Bank.accounts) {
+            if (account.getAccountNumber() == accountNumber) {
+                return account;
+            }
+        }
+        return null;
     }
 
     /**
@@ -109,14 +118,5 @@ public class Bank {
     public int suspendedDeposit(int accountNumber, double amount) {
         // TODO - implement Model.Bank.suspendedDeposit
         throw new UnsupportedOperationException();
-    }
-
-    public static Account findAccountByID(int accountNumber) {
-        for (Account account : Bank.accounts) {
-            if (account.getAccountNumber() == accountNumber) {
-                return account;
-            }
-        }
-        return null;
     }
 }

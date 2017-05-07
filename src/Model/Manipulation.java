@@ -23,33 +23,34 @@ package Model;
 
 import Model.account.Account;
 import Model.account.SaverAccount;
-import Model.exceptions.IllegalTimeException;
-import Model.exceptions.UnchangeableException;
+import Model.exceptions.*;
 
 import java.util.Date;
 
 public class Manipulation {
     private final Date createTime = new Date();
 
-    private final int origin;
+    private final Account origin;
     private final double money;
-    private final int destination;
+    private final Account destination;
     private final boolean changeFlag;
     private Date finishTime;
     private Date subscribeTime;
     private String result;
 
 
-    public Manipulation(int origin, int destination, double money) {
-        this.origin = origin;
-        this.destination = destination;
+    public Manipulation(int origin, int destination, double money) throws AccountNotFoundException {
+        this.origin = Bank.findAccountByID(origin);
+        this.destination = Bank.findAccountByID(destination);
         this.money = money;
         this.changeFlag = true;
-
+        if (this.destination == null) {
+            throw new AccountNotFoundException("No such account.");
+        }
         Bank.manipulations.add(this);
     }
 
-    public Manipulation(int origin, int destination, double money, Date subscribeTime) throws IllegalTimeException{
+    public Manipulation(int origin, int destination, double money, Date subscribeTime) throws IllegalTimeException {
         this(origin, destination, money);
         this.subscribeTime = subscribeTime;
 
@@ -60,7 +61,7 @@ public class Manipulation {
             if (subscribeTime.after(new Date())) {
                 Bank.suspended.add(this);
             } else {
-                throw new  IllegalTimeException("Illegal subscribe time. Subscribed time already passes");
+                throw new IllegalTimeException("Illegal subscribe time. Subscribed time already passes");
             }
         }
     }
@@ -70,15 +71,15 @@ public class Manipulation {
             return false;
         }
         try {
-            Account origin = Bank.findAccountByID(this.origin);
-            Account destination = Bank.findAccountByID(this.destination);
-
             origin.draw(money);
             destination.save(money);
+            this.setResult("Success.");
 
             return true;
-        } catch () {
-
+        } catch (AccountSuspendedException e) {
+            this.setResult("Failed. " + e.getMessage());
+        } catch (OverdraftException e) {
+            this.setResult("Failed. " + e.getMessage());
         } finally {
             return false;
         }
@@ -100,7 +101,7 @@ public class Manipulation {
         return finishTime;
     }
 
-    public int getOrigin() {
+    public Account getOrigin() {
         return origin;
     }
 
@@ -108,7 +109,7 @@ public class Manipulation {
         return money;
     }
 
-    public int getDestination() {
+    public Account getDestination() {
         return destination;
     }
 
