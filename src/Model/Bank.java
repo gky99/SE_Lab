@@ -33,7 +33,6 @@ public class Bank {
 
     private int accountNumber = 1;
     private Vector<Account> accounts;
-    private int minSubscribeTime;
     private Vector<manipulation> suspended;
 
     public int clearFund() {
@@ -105,7 +104,7 @@ public class Bank {
     }
 
 
-    public Date parseDate(String s) throws ParseException {
+    public static Date parseDate(String s) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
         try {
             return dateFormat.parse(s);

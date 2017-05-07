@@ -33,7 +33,7 @@ public abstract class Account {
     private String name;
     private String address;
     private Date birthday;
-    private double overdraftLimit;
+
     private boolean suspend;
 
     /**
@@ -48,14 +48,15 @@ public abstract class Account {
         this.name = name;
         this.address = address;
         this.birthday = birthday;
-        this.overdraftLimit = 0;
         this.suspend = false;
     }
 
     /**
      * @param man
      */
-    public double save(manipulation man) throws Exception{
+    public double save(manipulation man) throws Exception {
+
+        this.getClass().isInterface();
         if (suspend) {
             throw new AccountSuspendedException("Account is suspended.");
         } else {
@@ -67,11 +68,16 @@ public abstract class Account {
     /**
      * @param man
      */
-    public double draw(manipulation man) throws Exception{
+    public double draw(manipulation man) throws Exception {
         if (suspend) {
             throw new AccountSuspendedException("Account is suspended.");
         } else {
-            if (money+overdraftLimit < man.getMoney()) {
+            double overdraftLimit = 0;
+            if (this instanceof Overdraftable) {
+                ((Overdraftable) this).getOverdraftLimit();
+            }
+
+            if (money + overdraftLimit < man.getMoney()) {
                 throw new OverdraftException("Out of overdraft boundary.");
             }
             money -= man.getMoney();
@@ -82,10 +88,6 @@ public abstract class Account {
     public boolean checkCredit() {
 
         return true;
-    }
-
-    public void setOverdraftLimit(double overdraftLimit) {
-        this.overdraftLimit = overdraftLimit;
     }
 
     public boolean setSuspend() {
@@ -104,31 +106,27 @@ public abstract class Account {
         return name;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public double getOverdraftLimit() {
-        return overdraftLimit;
-    }
-
-    public boolean isSuspend() {
-        return suspend;
-    }
-
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
     }
 
     public void setAddress(String address) {
         this.address = address;
     }
 
+    public Date getBirthday() {
+        return birthday;
+    }
+
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public boolean isSuspend() {
+        return suspend;
     }
 }

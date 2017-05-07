@@ -21,41 +21,37 @@
 
 package Model;
 
-import java.util.Calendar;
 import java.util.Date;
 
 public class manipulation {
-    private final Date createTime;
-    private Date finishTime;
+    private final Date createTime = new Date();
+    ;
     private final int origin;
     private final double money;
     private final int destination;
-    private final boolean subscribe;
-    private String result;
     private final boolean changeFlag;
+    private Date finishTime;
+    private Date subscribeTime;
+    private String result;
 
-    public manipulation(int origin, int destination, double money, boolean subscribe) {
+    public manipulation(int origin, int destination, double money) {
         this.origin = origin;
         this.destination = destination;
         this.money = money;
-        this.subscribe = subscribe;
         this.changeFlag = true;
-
-        this.createTime = new Date();
     }
 
-    private void setFinishTime() throws Exception{
+    public manipulation(int origin, double money, int destination, boolean changeFlag, Date subscribeTime) {
+        this.subscribeTime = subscribeTime;
+        this.origin = origin;
+        this.money = money;
+        this.destination = destination;
+        this.changeFlag = changeFlag;
+    }
+
+    private void setFinishTime() throws Exception {
         if (changeFlag) {
             this.finishTime = new Date();
-        } else {
-            throw new UnchangeableException("Manipulation already finished.");
-        }
-    }
-
-    public void setResult(String result) throws Exception{
-        if (changeFlag) {
-            this.result = result;
-            setFinishTime();
         } else {
             throw new UnchangeableException("Manipulation already finished.");
         }
@@ -83,5 +79,18 @@ public class manipulation {
 
     public String getResult() {
         return result;
+    }
+
+    public void setResult(String result) throws Exception {
+        if (changeFlag) {
+            this.result = result;
+            setFinishTime();
+        } else {
+            throw new UnchangeableException("Manipulation already finished.");
+        }
+    }
+
+    public Date getSubscribeTime() {
+        return subscribeTime;
     }
 }

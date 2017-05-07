@@ -28,6 +28,7 @@ public class AccountSuspendedException extends Exception {
     public AccountSuspendedException() {
         super();
     }
+
     public AccountSuspendedException(String message) {
         super(message);
     }

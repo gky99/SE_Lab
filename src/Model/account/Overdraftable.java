@@ -21,25 +21,12 @@
 
 package Model.account;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+/**
+ * Created by gky on 2017/5/7.
+ */
+public interface Overdraftable {
 
-public class JuniorAccount extends Account {
-    public JuniorAccount(int accountNum, double money, String name, String address, Date birthday) {
-        super(accountNum, money, name, address, birthday);
-    }
+    double getOverdraftLimit();
 
-    /**
-     * @param birthday
-     */
-    public static boolean checkAge(Date birthday) {
-        Calendar today = new GregorianCalendar();
-        Calendar birth = new GregorianCalendar();
-        birth.setTime(birthday);
-
-        birth.add(Calendar.YEAR, 18);
-        return today.before(birth);
-    }
-
+    void setOverdraftLimit(double overdraftLimit);
 }

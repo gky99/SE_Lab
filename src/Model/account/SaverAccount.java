@@ -23,20 +23,30 @@ package Model.account;
 
 import Model.manipulation;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Vector;
 
 public class SaverAccount extends Account {
 
+    private static int minSubscribeTime;
     private Vector<manipulation> subscription;
 
     public SaverAccount(int accountNum, double money, String name, String address, Date birthday) {
         super(accountNum, money, name, address, birthday);
     }
 
-    public void subscribe() {
-        // TODO - implement SaverAccount.subscribe
-        throw new UnsupportedOperationException();
+    public void subscribe(manipulation man) {
+        Calendar createTime = new GregorianCalendar();
+        createTime.setTime(man.getCreateTime());
+        Calendar subscribeTime = new GregorianCalendar();
+        subscribeTime.setTime(man.getSubscribeTime());
+
+        createTime.add(Calendar.DATE, minSubscribeTime);
+        if (createTime.before(subscribeTime)) {
+
+        }
     }
 
 }

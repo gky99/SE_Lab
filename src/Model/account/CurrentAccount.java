@@ -21,10 +21,33 @@
 
 package Model.account;
 
+import Model.Bank;
+
 import java.util.Date;
 
-public class CurrentAccount extends Account {
+public class CurrentAccount extends Account implements Overdraftable {
+    double overdraftLimit;
+
     public CurrentAccount(int accountNum, double money, String name, String address, Date birthday) {
         super(accountNum, money, name, address, birthday);
+    }
+
+    public static void main(String[] args) throws Exception {
+        System.out.println("Compile Success");
+
+        String date = "1999.5.8";
+        System.out.println(Bank.parseDate(date));
+        Date d = Bank.parseDate(date);
+        System.out.println(JuniorAccount.checkAge(d));
+    }
+
+    @Override
+    public double getOverdraftLimit() {
+        return overdraftLimit;
+    }
+
+    @Override
+    public void setOverdraftLimit(double overdraftLimit) {
+        this.overdraftLimit = overdraftLimit;
     }
 }
