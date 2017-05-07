@@ -23,6 +23,8 @@ package Model;
 
 import Model.account.Account;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 
@@ -102,4 +104,13 @@ public class Bank {
         throw new UnsupportedOperationException();
     }
 
+
+    public Date parseDate(String s) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+        try {
+            return dateFormat.parse(s);
+        } catch (ParseException e) {
+            throw new ParseException("Input can not be parsed to a Date", e.getErrorOffset());
+        }
+    }
 }

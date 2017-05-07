@@ -21,7 +21,9 @@
 
 package Model.account;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class JuniorAccount extends Account {
     public JuniorAccount(int accountNum, double money, String name, String address, Date birthday) {
@@ -29,11 +31,15 @@ public class JuniorAccount extends Account {
     }
 
     /**
-     * @param age
+     * @param birthday
      */
-    public boolean checkAge(int age) {
-        // TODO - implement JuniorAccount.checkAge
-        throw new UnsupportedOperationException();
+    public boolean checkAge(Date birthday) {
+        Calendar today = new GregorianCalendar();
+        Calendar birth = new GregorianCalendar();
+        birth.setTime(birthday);
+
+        birth.add(Calendar.YEAR, 18);
+        return today.before(birth);
     }
 
 }
