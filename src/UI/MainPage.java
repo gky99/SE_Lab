@@ -24,6 +24,7 @@ package UI;
 import Model.Bank;
 import Model.Manipulation;
 import Model.account.Account;
+import Model.account.SaverAccount;
 import Model.exceptions.*;
 
 import java.io.BufferedReader;
@@ -313,12 +314,18 @@ public class MainPage {
         }
     }
 
-    public boolean subscribedDraw() {
+    public boolean subscribedDraw(SaverAccount account) {
+        String[] options = new String[account.getSubscription().size()];
+        for (Manipulation temp : account.getSubscription()) {
+            options[account.getSubscription().indexOf(temp)] = "choose subscription:\n" + temp.toString();
+        }
+        int temp = inputOptionChoose(options);
 
+        return doManipulation(account.getSubscription().get(temp - 1));
     }
 
     public boolean closeAccount() {
-
+        return account.closeAccount();
     }
 
     /**

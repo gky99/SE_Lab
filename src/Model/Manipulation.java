@@ -93,6 +93,14 @@ public class Manipulation {
         this.subscribeTime = subscribeTime;
     }
 
+    @Override
+    public String toString() {
+        return "From: " + origin.getName() +
+                " To: " + destination.getName() +
+                " Amount: " + money +
+                "Subscribe time:" + subscribeTime;
+    }
+
     public boolean isChangeFlag() {
         return changeFlag;
     }
