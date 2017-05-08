@@ -30,6 +30,11 @@ import java.util.GregorianCalendar;
 public class JuniorAccount extends Account {
     private static int ageLimit = 16;
 
+    /**
+     * {@inheritDoc}
+     *
+     * @see Account#Account(int, String, String, String, Date, double)
+     */
     public JuniorAccount(int accountNum, String PIN, Date birthday, String name, String address, double money) throws IllegalInitialValueException {
         super(accountNum, PIN, name, address, birthday, money);
     }

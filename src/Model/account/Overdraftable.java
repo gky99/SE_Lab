@@ -22,7 +22,7 @@
 package Model.account;
 
 /**
- *
+ * This interface is imposed to account types that can overdraft.
  * Created by gky on 2017/5/7.
  */
 public interface Overdraftable {

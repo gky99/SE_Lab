@@ -24,6 +24,7 @@ package Model.account;
 import java.util.Date;
 
 /**
+ * Class for fake accounts like "Cash", "Cheque" etc.
  * Created by gky on 2017/5/7.
  */
 public class VirtualAccount extends Account {

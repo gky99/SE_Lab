@@ -266,11 +266,8 @@ public class MainPage {
                 System.out.println(manipulation.getResult());
                 return false;
             }
-        } catch (IllegalTimeException e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-            return false;
-        } catch (UnchangeableException e) {
-            System.out.println("Manipulation unable to be changed");
             return false;
         }
     }

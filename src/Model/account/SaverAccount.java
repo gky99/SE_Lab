@@ -35,6 +35,11 @@ public class SaverAccount extends Account {
     private static int minSubscribeTime = 5;
     private Vector<Manipulation> subscription = new Vector<Manipulation>();
 
+    /**
+     * {@inheritDoc}
+     *
+     * @see Account#Account(int, String, String, String, Date, double)
+     */
     public SaverAccount(int accountNum, String PIN, Date birthday, String name, String address, double money) throws IllegalInitialValueException {
         super(accountNum, PIN, name, address, birthday, money);
     }

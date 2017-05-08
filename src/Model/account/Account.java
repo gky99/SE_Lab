@@ -28,6 +28,10 @@ import Model.exceptions.OverdraftException;
 
 import java.util.Date;
 
+/**
+ * This abstract class is super class of all types of accounts.
+ * It contains the method for basic operations on account.
+ */
 public abstract class Account {
 
     private final int accountNumber;
@@ -40,11 +44,7 @@ public abstract class Account {
     private boolean suspend;
 
     /**
-     * @param PIN
-     * @param name
-     * @param address
-     * @param birthday
-     * @param money
+     * @exception IllegalInitialValueException Throws when PIN is empty or money < 0.
      */
     public Account(int accountNumber, String PIN, String name, String address, Date birthday, double money) throws IllegalInitialValueException {
         this.accountNumber = accountNumber;
@@ -62,6 +62,11 @@ public abstract class Account {
         }
     }
 
+    /**
+     * Check the credit to decide whether open account.
+     *
+     * @return Always true now.
+     */
     public static boolean checkCredit() {
 
         return true;
@@ -84,7 +89,8 @@ public abstract class Account {
     }
 
     /**
-     * @param count
+     * @return return the remaining money.
+     * @exception AccountSuspendedException Throws when account is suspended.
      */
     public double save(double count) throws AccountSuspendedException {
 
@@ -98,7 +104,9 @@ public abstract class Account {
     }
 
     /**
-     * @param count
+     * @return return the remaining money.
+     * @exception AccountSuspendedException Throws when account is suspended.
+     * @exception OverdraftException Throws when the overdraft limit is exceeded. For classes do not impose {@link Overdraftable}, the overdraft limit is seen as 0.
      */
     public double draw(double count) throws AccountSuspendedException, OverdraftException {
         if (suspend) {
@@ -117,6 +125,9 @@ public abstract class Account {
         }
     }
 
+    /**
+     * @return If account is successfully closed, return true.
+     * */
     public boolean closeAccount() {
         if (this.getMoney() == 0) {
             Bank.accounts.remove(this);
@@ -125,6 +136,10 @@ public abstract class Account {
             return false;
     }
 
+    /**
+     * Change the suspend state of the account in to the other one.
+     * @return current suspend state.
+     * */
     public boolean setSuspend() {
         return suspend = !suspend;
     }

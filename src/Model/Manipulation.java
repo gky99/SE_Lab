@@ -120,9 +120,12 @@ public class Manipulation {
         return false;
     }
 
-    public boolean confirm() throws IllegalTimeException, UnchangeableException {
+    public boolean confirm() throws IllegalTimeException, UnchangeableException, IllegalInitialValueException {
         if (!this.confirmed) {
             this.confirmed = true;
+            if (money < 0) {
+                throw new IllegalInitialValueException("Amount of money should be larger than 0");
+            }
             if (this.subscribeTime != null) {
                 if (this.origin instanceof SaverAccount) {
                     if (this.destination.getAccountNumber() > 0) {
