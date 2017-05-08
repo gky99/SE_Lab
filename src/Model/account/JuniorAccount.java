@@ -26,6 +26,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class JuniorAccount extends Account {
+    private static int ageLimit = 16;
+
     public JuniorAccount(int accountNum, double money, String name, String address, Date birthday) {
         super(accountNum, money, name, address, birthday);
     }
@@ -38,7 +40,7 @@ public class JuniorAccount extends Account {
         Calendar birth = new GregorianCalendar();
         birth.setTime(birthday);
 
-        birth.add(Calendar.YEAR, 18);
+        birth.add(Calendar.YEAR, ageLimit);
         return today.before(birth);
     }
 

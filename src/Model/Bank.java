@@ -57,7 +57,7 @@ public class Bank {
 
     public static int clearFund() throws Exception {
         int i = 0;
-        for (Manipulation temp: suspended) {
+        for (Manipulation temp : suspended) {
             if (temp.execute()) {
                 i++;
                 suspended.remove(temp);

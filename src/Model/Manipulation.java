@@ -37,6 +37,7 @@ public class Manipulation {
     private Date finishTime;
     private Date subscribeTime;
     private String result;
+    private boolean confirmed = false;
 
 
     public Manipulation(Account origin, Account destination, double money) {
@@ -44,8 +45,6 @@ public class Manipulation {
         this.destination = destination;
         this.money = money;
         this.changeFlag = true;
-
-        Bank.manipulations.add(this);
     }
 
     public Manipulation(Account origin, int destination, double money) throws AccountNotFoundException {
@@ -53,10 +52,9 @@ public class Manipulation {
         this.destination = Bank.findAccountByID(destination);
         this.money = money;
         this.changeFlag = true;
-        if (this.destination == null || this.origin == null) {
-            throw new AccountNotFoundException("No such account.");
+        if (this.destination == null) {
+            throw new AccountNotFoundException("Target account: " + destination + ". No such account.");
         }
-        Bank.manipulations.add(this);
     }
 
     public Manipulation(int origin, Account destination, double money) throws AccountNotFoundException {
@@ -64,10 +62,9 @@ public class Manipulation {
         this.destination = destination;
         this.money = money;
         this.changeFlag = true;
-        if (this.destination == null || this.origin == null) {
-            throw new AccountNotFoundException("No such account.");
+        if (this.origin == null) {
+            throw new AccountNotFoundException("Origin account not found.");
         }
-        Bank.manipulations.add(this);
     }
 
     public Manipulation(int origin, int destination, double money) throws AccountNotFoundException {
@@ -75,26 +72,16 @@ public class Manipulation {
         this.destination = Bank.findAccountByID(destination);
         this.money = money;
         this.changeFlag = true;
-        if (this.destination == null || this.origin == null) {
-            throw new AccountNotFoundException("No such account.");
+        if (this.destination == null) {
+            throw new AccountNotFoundException("Target account: " + destination + ". No such account.");
+        } else if (this.origin == null) {
+            throw new AccountNotFoundException("Origin account not found.");
         }
-        Bank.manipulations.add(this);
     }
 
     public Manipulation(int origin, int destination, double money, Date subscribeTime) throws IllegalTimeException {
         this(origin, destination, money);
         this.subscribeTime = subscribeTime;
-
-        Account account = Bank.findAccountByID(origin);
-        if (account instanceof SaverAccount) {
-            ((SaverAccount) account).subscribe(this);
-        } else {
-            if (subscribeTime.after(new Date())) {
-                Bank.suspended.add(this);
-            } else {
-                throw new IllegalTimeException("Illegal subscribe time. Subscribed time already passes");
-            }
-        }
     }
 
     public boolean execute() throws Exception {
@@ -114,17 +101,34 @@ public class Manipulation {
     }
 
     public boolean confirm() throws Exception {
-        if (origin.getAccountNumber() == ) {
+        if (!this.confirmed) {
+            this.confirmed = true;
+            if (this.subscribeTime != null) {
+                if (this.origin instanceof SaverAccount) {
+                    ((SaverAccount) this.origin).subscribe(this);
+                    Bank.manipulations.add(this);
+                    return true;
+                } else {
+                    if (subscribeTime.after(new Date())) {
+                        Bank.suspended.add(this);
+                        Bank.manipulations.add(this);
+                        return true;
+                    } else {
+                        throw new IllegalTimeException("Illegal subscribe time. Subscribed time already passes");
+                    }
+                }
+            }
+            Bank.manipulations.add(this);
 
-        }
-        if (subscribeTime != null) {
-            if (subscribeTime.after(new Date())) {
-                return false;
-            }
-            else {
-                return execute();
+            if (origin.getAccountNumber() < -1) {
+                Bank.suspended.add(this);
+                return true;
             }
         }
+        if (subscribeTime != null && subscribeTime.after(new Date())) {
+            return false;
+        } else
+            return execute();
     }
 
     private void setFinishTime() throws UnchangeableException {
