@@ -54,6 +54,12 @@ public class Bank {
     public Bank() {
     }
 
+    /**
+     * Parase string in formate "yyyy.mm.dd" into {@link Date}
+     *
+     * @param s input time string.
+     * @throws ParseException thrown when the string is in illegal format.
+     */
     public static Date parseDate(String s) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
         try {

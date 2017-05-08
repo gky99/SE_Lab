@@ -25,7 +25,9 @@ import Model.Bank;
 import Model.Manipulation;
 import Model.account.Account;
 import Model.account.SaverAccount;
-import Model.exceptions.*;
+import Model.exceptions.AccountNotFoundException;
+import Model.exceptions.IllegalInitialValueException;
+import Model.exceptions.OverAgeException;
 
 import java.io.BufferedReader;
 import java.io.IOException;

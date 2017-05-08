@@ -38,7 +38,11 @@ public class loginTest {
 
         Bank.openAccount("123", "234", 700, Bank.parseDate("1996.6.6"), "345", "current account");
         mainPage.account = Bank.openAccount("aoe", "oeu", 700, Bank.parseDate("1996.10.10"), "eui", "saver account");
-
+        if (mainPage.account instanceof SaverAccount) {
+            Manipulation man = new Manipulation(mainPage.account, -1, 100, Bank.parseDate("2000.0.0"));
+            man.confirmed = true;
+            ((SaverAccount) mainPage.account).getSubscription().add(man);
+        }
         mainPage.actions();
 
 //        boolean t = mainPage.transfer();

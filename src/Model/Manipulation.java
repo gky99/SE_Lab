@@ -33,12 +33,22 @@ public class Manipulation {
     private final Account origin;
     private final double money;
     private final Account destination;
-    private final boolean changeFlag;
+    //    private boolean confirmed = false;
+    public boolean confirmed = false;
+    private boolean changeFlag;
     private Date finishTime;
     private Date subscribeTime;
     private String result;
-    private boolean confirmed = false;
 
+
+    /**
+     * Construct a <code>Manipulation</code>.
+     *
+     * @param origin      the source of the transfer.
+     * @param destination the target of the transfer.
+     * @param money       the amount of money to be transferred
+     * @throws AccountNotFoundException thown when the account can not be found in the {@link Bank#accounts}.
+     */
     public Manipulation(Account origin, Account destination, double money) {
         this.origin = origin;
         this.destination = destination;
@@ -46,6 +56,14 @@ public class Manipulation {
         this.changeFlag = true;
     }
 
+    /**
+     * Construct a <code>Manipulation</code>.
+     *
+     * @param origin      the source of the transfer.
+     * @param destination the target of the transfer.
+     * @param money       the amount of money to be transferred
+     * @throws AccountNotFoundException thown when the account can not be found in the {@link Bank#accounts}.
+     */
     public Manipulation(Account origin, int destination, double money) throws AccountNotFoundException {
         this.origin = origin;
         this.destination = Bank.findAccountByID(destination);
@@ -56,6 +74,14 @@ public class Manipulation {
         }
     }
 
+    /**
+     * Construct a <code>Manipulation</code>.
+     *
+     * @param origin      the source of the transfer.
+     * @param destination the target of the transfer.
+     * @param money       the amount of money to be transferred
+     * @throws AccountNotFoundException thown when the account can not be found in the {@link Bank#accounts}.
+     */
     public Manipulation(int origin, Account destination, double money) throws AccountNotFoundException {
         this.origin = Bank.findAccountByID(origin);
         this.destination = destination;
@@ -66,6 +92,14 @@ public class Manipulation {
         }
     }
 
+    /**
+     * Construct a <code>Manipulation</code>.
+     *
+     * @param origin      the source of the transfer.
+     * @param destination the target of the transfer.
+     * @param money       the amount of money to be transferred
+     * @throws AccountNotFoundException thown when the account can not be found in the {@link Bank#accounts}.
+     */
     public Manipulation(int origin, int destination, double money) throws AccountNotFoundException {
         this.origin = Bank.findAccountByID(origin);
         this.destination = Bank.findAccountByID(destination);
@@ -78,16 +112,43 @@ public class Manipulation {
         }
     }
 
+    /**
+     * Construct a <code>Manipulation</code>.
+     *
+     * @param origin        the source of the transfer.
+     * @param destination   the target of the transfer.
+     * @param money         the amount of money to be transferred.
+     * @param subscribeTime for subscribed manipulations. Manipulation should be execute at or after the subscribed time.
+     * @throws AccountNotFoundException thown when the account can not be found in the {@link Bank#accounts}.
+     */
     public Manipulation(int origin, int destination, double money, Date subscribeTime) {
         this(origin, destination, money);
         this.subscribeTime = subscribeTime;
     }
 
+    /**
+     * Construct a <code>Manipulation</code>.
+     *
+     * @param origin        the source of the transfer.
+     * @param destination   the target of the transfer.
+     * @param money         the amount of money to be transferred.
+     * @param subscribeTime for subscribed manipulations. Manipulation should be execute at or after the subscribed time.
+     * @throws AccountNotFoundException thown when the account can not be found in the {@link Bank#accounts}.
+     */
     public Manipulation(Account origin, int destination, double money, Date subscribeTime) {
         this(origin, destination, money);
         this.subscribeTime = subscribeTime;
     }
 
+    /**
+     * Construct a <code>Manipulation</code>.
+     *
+     * @param origin        the source of the transfer.
+     * @param destination   the target of the transfer.
+     * @param money         the amount of money to be transferred.
+     * @param subscribeTime for subscribed manipulations. Manipulation should be execute at or after the subscribed time.
+     * @throws AccountNotFoundException thown when the account can not be found in the {@link Bank#accounts}.
+     */
     public Manipulation(int origin, Account destination, double money, Date subscribeTime) {
         this(origin, destination, money);
         this.subscribeTime = subscribeTime;
@@ -96,15 +157,20 @@ public class Manipulation {
     @Override
     public String toString() {
         return "From: " + origin.getName() +
-                " To: " + destination.getName() +
+                "  To: " + destination.getName() +
                 "    Amount: " + money +
-                "Subscribe time:" + subscribeTime;
+                "  Subscribe time:" + subscribeTime;
     }
 
     public boolean isChangeFlag() {
         return changeFlag;
     }
 
+    /**
+     * Directly execute the manipulation without check.
+     *
+     * @throws UnchangeableException thrown when you try to execute a finished manipulation.
+     */
     public boolean execute() throws UnchangeableException {
         try {
             origin.draw(money);
@@ -120,6 +186,16 @@ public class Manipulation {
         return false;
     }
 
+    /**
+     * Confirm the construct of a manipulation. Save the valid manipulation into {@link Bank#manipulations}.
+     * Execute the manipulations that can be executed now.
+     * Save the manipulations that should be executed later into corresponding place({@link SaverAccount#subscription} and {@link Bank#suspended}).
+     * Remove the manipulation from the place after execute them.
+     *
+     * @exception IllegalInitialValueException thrown when the money < 0.
+     * @exception IllegalTimeException thrown when subscribed time too close to today for {@link SaverAccount} or subscribed time is already passed.
+     * @exception UnchangeableException thrown when you try to execute a finished manipulation.
+     * */
     public boolean confirm() throws IllegalTimeException, UnchangeableException, IllegalInitialValueException {
         if (!this.confirmed) {
             this.confirmed = true;
@@ -161,13 +237,20 @@ public class Manipulation {
                 this.result = "Subscription time does not come.";
             }
             return false;
-        } else
+        } else {
+            if (this.origin instanceof SaverAccount) {
+                ((SaverAccount) this.origin).getSubscription().remove(this);
+            } else {
+//                Bank.suspended.remove(this);
+            }
             return execute();
+        }
     }
 
     private void setFinishTime() throws UnchangeableException {
         if (changeFlag) {
             this.finishTime = new Date();
+            this.changeFlag = false;
         } else {
             throw new UnchangeableException("Manipulation already finished.");
         }
