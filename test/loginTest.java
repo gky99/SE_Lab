@@ -22,6 +22,7 @@
 import Model.Bank;
 import Model.Manipulation;
 import Model.account.Account;
+import Model.account.CurrentAccount;
 import Model.account.SaverAccount;
 import UI.MainPage;
 
@@ -33,10 +34,10 @@ public class loginTest {
         new Bank();
         MainPage mainPage = new MainPage();
 
-//        mainPage.login();
-//        mainPage.openAccount();
-
-        Bank.openAccount("123", "234", 700, Bank.parseDate("1996.6.6"), "345", "current account");
+        Account account = Bank.openAccount("123", "234", 700, Bank.parseDate("1996.6.6"), "345", "current account");
+        if (account instanceof CurrentAccount) {
+            ((CurrentAccount) account).setOverdraftLimit(1000);
+        }
         mainPage.account = Bank.openAccount("aoe", "oeu", 700, Bank.parseDate("1996.10.10"), "eui", "saver account");
         if (mainPage.account instanceof SaverAccount) {
             Manipulation man = new Manipulation(mainPage.account, -1, 100, Bank.parseDate("2000.0.0"));
@@ -45,21 +46,5 @@ public class loginTest {
         }
         mainPage.actions();
 
-//        boolean t = mainPage.transfer();
-//        System.out.println("=============================");
-
-//        Bank.clearFund();
-//
-//        for (Account temp : Bank.accounts) {
-//            System.out.println(temp);
-//        }
-//
-//        if (mainPage.account instanceof SaverAccount) {
-//            SaverAccount saverAccount = (SaverAccount) mainPage.account;
-//
-//            for (Manipulation temp : saverAccount.getSubscription()) {
-//                System.out.println(temp);
-//            }
-//        }
     }
 }

@@ -197,13 +197,17 @@ public class Manipulation {
      * @throws UnchangeableException        thrown when you try to execute a finished manipulation.
      */
     public boolean confirm() throws IllegalTimeException, UnchangeableException, IllegalInitialValueException {
+//        Enter if this manipulation is just created.
         if (!this.confirmed) {
             this.confirmed = true;
+//            Check money value.which should be positive.
             if (money < 0) {
                 throw new IllegalInitialValueException("Amount of money should be larger than 0");
             }
+//            Enter if the manipulation should not be execute now.
             if (this.subscribeTime != null) {
                 if (this.origin instanceof SaverAccount) {
+
                     if (this.destination.getAccountNumber() > 0) {
                         Bank.suspended.add(this);
                         this.result = "Subscribed.";

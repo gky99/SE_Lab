@@ -55,6 +55,14 @@ public class Bank {
     }
 
     /**
+     * Add codes here to do some thing you want the bank system to do before exit the program
+     * like save the account information and manipulations.
+     */
+    public static void beforClose() {
+
+    }
+
+    /**
      * Parase string in formate "yyyy.mm.dd" into {@link Date}
      *
      * @param s input time string.

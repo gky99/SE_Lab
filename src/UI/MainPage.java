@@ -308,6 +308,9 @@ public class MainPage {
         return doManipulation(manipulation);
     }
 
+    /**
+     * Menu page.
+     */
     public void actions() {
         while (true) {
             while (true) {
@@ -324,6 +327,7 @@ public class MainPage {
                     if (openAccount())
                         break;
                 } else if (option == 3) {
+                    Bank.beforClose();
                     System.exit(0);
                 }
             }
