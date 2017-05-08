@@ -40,7 +40,9 @@ public class JuniorAccount extends Account {
     }
 
     /**
-     * @param birthday
+     * Check the birthday to find whether the age of the user is allowed to open a junior account.
+     *
+     * @return if age limitation is satisfied, return true.
      */
     public static boolean checkAge(Date birthday) {
         Calendar today = new GregorianCalendar();

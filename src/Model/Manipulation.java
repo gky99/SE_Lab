@@ -192,10 +192,10 @@ public class Manipulation {
      * Save the manipulations that should be executed later into corresponding place({@link SaverAccount#subscription} and {@link Bank#suspended}).
      * Remove the manipulation from the place after execute them.
      *
-     * @exception IllegalInitialValueException thrown when the money < 0.
-     * @exception IllegalTimeException thrown when subscribed time too close to today for {@link SaverAccount} or subscribed time is already passed.
-     * @exception UnchangeableException thrown when you try to execute a finished manipulation.
-     * */
+     * @throws IllegalInitialValueException thrown when the money < 0.
+     * @throws IllegalTimeException         thrown when subscribed time too close to today for {@link SaverAccount} or subscribed time is already passed.
+     * @throws UnchangeableException        thrown when you try to execute a finished manipulation.
+     */
     public boolean confirm() throws IllegalTimeException, UnchangeableException, IllegalInitialValueException {
         if (!this.confirmed) {
             this.confirmed = true;

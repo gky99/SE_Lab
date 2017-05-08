@@ -58,6 +58,7 @@ public class Bank {
      * Parase string in formate "yyyy.mm.dd" into {@link Date}
      *
      * @param s input time string.
+     * @return return the corresponding {@link Date} of the input string.
      * @throws ParseException thrown when the string is in illegal format.
      */
     public static Date parseDate(String s) throws ParseException {
@@ -69,6 +70,13 @@ public class Bank {
         }
     }
 
+    /**
+     * Clear the suspend manipulation in the {@link Bank#suspended}.
+     * If the manipulation is a subscribed one, only clear it when the time condition is satisfied.
+     *
+     * @return return the amount of manipulations cleared.
+     * @throws Exception see {@link Manipulation#confirm()}
+     */
     public static int clearFund() throws Exception {
         int i = 0;
         if (suspended.isEmpty()) {
@@ -88,6 +96,12 @@ public class Bank {
         return i;
     }
 
+    /**
+     * Find the account with input account number in {@link Bank#accounts}.
+     *
+     * @param accountNumber account number
+     * @return account with input account number. Return <code>null</code> if no account is found.
+     */
     public static Account findAccountByID(int accountNumber) {
         for (Account account : Bank.accounts) {
             if (account.getAccountNumber() == accountNumber) {
@@ -98,12 +112,12 @@ public class Bank {
     }
 
     /**
-     * @param PIN
-     * @param name
-     * @param money
-     * @param birthday
-     * @param address
-     * @param accountType
+     * Check the condition to open different account and open the account.
+     * Add the created account into {@link Bank#accounts}.
+     *
+     * @return the created account.
+     * @throws IllegalInitialValueException see {@link Account#Account(int, String, String, String, Date, double)}
+     * @throws OverAgeException             thrown when age limitation is not satisfied.
      */
     public static Account openAccount(String PIN, String name, double money, Date birthday, String address, String accountType) throws OverAgeException, IllegalInitialValueException {
         Account temp = null;

@@ -133,6 +133,7 @@ public abstract class Account {
 
     /**
      * Close the account.
+     *
      * @return If account is successfully closed, return true.
      */
     public boolean closeAccount() {
