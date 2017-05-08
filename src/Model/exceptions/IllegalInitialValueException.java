@@ -19,18 +19,16 @@
  *
  */
 
-import Model.Bank;
-import UI.MainPage;
+package Model.exceptions;
 
 /**
  * Created by Pauli on 2017/5/8.
  */
-public class loginTest {
-    public static void main(String[] args) {
-        new Bank();
-        MainPage mainPage = new MainPage();
+public class IllegalInitialValueException extends Exception {
+    public IllegalInitialValueException() {
+    }
 
-//        mainPage.login();
-        mainPage.openAccount();
+    public IllegalInitialValueException(String message) {
+        super(message);
     }
 }

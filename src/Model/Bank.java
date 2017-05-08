@@ -22,6 +22,7 @@
 package Model;
 
 import Model.account.*;
+import Model.exceptions.IllegalInitialValueException;
 import Model.exceptions.OverAgeException;
 
 import java.text.ParseException;
@@ -42,8 +43,11 @@ public class Bank {
         Bank.manipulations = new Vector<Manipulation>();
         Bank.suspended = new Vector<Manipulation>();
 
-        accounts.add(new VirtualAccount(-1, "cash"));
-        accounts.add(new VirtualAccount(-2, "cheque"));
+        try {
+            accounts.add(new VirtualAccount(-1, "cash"));
+            accounts.add(new VirtualAccount(-2, "cheque"));
+        } catch (Exception e) {
+        }
     }
 
     public static Date parseDate(String s) throws ParseException {
@@ -83,20 +87,20 @@ public class Bank {
      * @param address
      * @param accountType
      */
-    public static Account openAccount(String PIN, String name, double money, Date birthday, String address, String accountType) throws OverAgeException {
+    public static Account openAccount(String PIN, String name, double money, Date birthday, String address, String accountType) throws OverAgeException, IllegalInitialValueException {
         Account temp = null;
         if (Account.checkCredit()) {
-            if (accountType.equals("CurrentAccount")) {
+            if (accountType.equals("current account")) {
                 temp = new CurrentAccount(accountNumber, PIN, birthday, name, address, money);
                 Bank.accounts.add(temp);
-            } else if (accountType.equals("JuniorAccount")) {
+            } else if (accountType.equals("junior account")) {
                 if (JuniorAccount.checkAge(birthday)) {
                     temp = new JuniorAccount(accountNumber, PIN, birthday, name, address, money);
                     Bank.accounts.add(temp);
                 } else {
-                    throw new OverAgeException("Age over 18");
+                    throw new OverAgeException("Age over 16");
                 }
-            } else if (accountType.equals("SaverAccount")) {
+            } else if (accountType.equals("saver account")) {
                 temp = new SaverAccount(accountNumber, PIN, birthday, name, address, money);
                 Bank.accounts.add(temp);
             }

@@ -23,7 +23,8 @@ package UI;
 
 import Model.Bank;
 import Model.account.Account;
-import Model.exceptions.AccountNotFoundException;
+import Model.exceptions.IllegalInitialValueException;
+import Model.exceptions.OverAgeException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class MainPage {
         }
     }
 
-    public static String stringInput(String prompt) {
+    public static String inputString(String prompt) {
         String temp;
         do {
             System.out.println(prompt);
@@ -58,8 +59,42 @@ public class MainPage {
         return temp;
     }
 
+    public static double inputDouble(String prompt, String parseErrorMessage) {
+        double temp;
+        do {
+            try {
+                System.out.println(prompt);
+                temp = Double.parseDouble(readLine());
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println(parseErrorMessage);
+                System.out.println(" Please try again.");
+            }
+        } while (true);
+        return temp;
+    }
 
-    public static int optionChoose(String[] options) {
+    public static double inputDouble(String prompt) {
+        return inputDouble(prompt, "Illegal input format.");
+    }
+
+    public static Date inputDate(String prompt) {
+        Date temp;
+        do {
+            try {
+                System.out.println(prompt);
+                System.out.println("Date should be in format \"YYYY.MM.DD\".");
+                temp = Bank.parseDate(readLine());
+                break;
+            } catch (Exception e) {
+                System.out.print(e.getMessage());
+                System.out.println(" Please try again.");
+            }
+        } while (true);
+        return temp;
+    }
+
+    public static int inputOptionChoose(String[] options) {
         int temp;
         int i = 0;
         while (i < options.length) {
@@ -68,17 +103,18 @@ public class MainPage {
         }
 
         while (true) {
-            temp = integerInput(options);
+            temp = inputInt(options);
 
             if (temp < options.length + 1 && temp > 0) {
                 return temp;
             } else {
-                System.out.println("Illegal input. Please try again.");
+                System.out.print("Illegal input.");
+                System.out.println(" Please try again.");
             }
         }
     }
 
-    public static int integerInput(String prompt) {
+    public static int inputInt(String prompt, String parseErrorMessage) {
         int temp;
         do {
             try {
@@ -86,13 +122,18 @@ public class MainPage {
                 temp = Integer.parseInt(readLine());
                 break;
             } catch (NumberFormatException e) {
-                System.out.println("Illegal acconut number format.");
+                System.out.print(parseErrorMessage);
+                System.out.println(" Please try again.");
             }
         } while (true);
         return temp;
     }
 
-    public static int integerInput(String[] prompt) {
+    public static int inputInt(String prompt) {
+        return inputInt(prompt, "Illegal input format.");
+    }
+
+    public static int inputInt(String[] prompt) {
         int temp;
         do {
             try {
@@ -103,7 +144,8 @@ public class MainPage {
                 temp = Integer.parseInt(readLine());
                 break;
             } catch (NumberFormatException e) {
-                System.out.println("Illegal acconut number format.");
+                System.out.print("Illegal input format.");
+                System.out.println(" Please try again.");
             }
         } while (true);
         return temp;
@@ -118,10 +160,10 @@ public class MainPage {
 
         while (true) {
 //            Get account number.
-            accountNumber = integerInput(piy + "account number:");
+            accountNumber = inputInt(piy + "account number:");
 
 //            Get PIN
-            PIN = stringInput(piy + "PIN:");
+            PIN = inputString(piy + "PIN:");
 
 //            Try to find the account.
             Account temp = Bank.findAccountByID(accountNumber);
@@ -135,7 +177,7 @@ public class MainPage {
 
             int selection;
             String[] options = {"try again.", "exit."};
-            selection = optionChoose(options);
+            selection = inputOptionChoose(options);
 
             if (selection == 1) {
 
@@ -149,24 +191,40 @@ public class MainPage {
      *
      */
     public boolean openAccount() {
+        String accountType;
         String PIN;
         String name;
         String address;
         double money;
-        String accountType;
         Date birthday;
-        while (true) {
-            try {
-                System.out.println("Please input your account number:");
-                PIN = readLine();
-                if (PIN != null) {
-                    break;
-                } else {
 
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Illegal acconut number format.");
-            }
+
+        int temp = 0;
+        String[] options = {
+                "current account",
+                "junior account",
+                "saver account"
+        };
+        String[] tempOps = new String[3];
+        for (int i = 0; i < options.length; i++) {
+            tempOps[i] = "open a " + options[i] + ".";
+        }
+        temp = inputOptionChoose(tempOps);
+        accountType = options[temp - 1];
+
+        PIN = inputString(piy + "PIN.");
+        name = inputString(piy + "name.");
+        address = inputString(piy + "address.");
+        money = inputDouble(piy + "money.");
+        birthday = inputDate(piy + "birthday.");
+
+        try {
+            this.account = Bank.openAccount(PIN, name, money, birthday, address, accountType);
+            return true;
+        } catch (OverAgeException e) {
+            System.out.println(e.getMessage());
+        } catch (IllegalInitialValueException e) {
+            System.out.println(e.getMessage());
         }
         return false;
     }

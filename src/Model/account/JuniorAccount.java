@@ -21,6 +21,8 @@
 
 package Model.account;
 
+import Model.exceptions.IllegalInitialValueException;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -28,7 +30,7 @@ import java.util.GregorianCalendar;
 public class JuniorAccount extends Account {
     private static int ageLimit = 16;
 
-    public JuniorAccount(int accountNum, String PIN, Date birthday, String name, String address, double money) {
+    public JuniorAccount(int accountNum, String PIN, Date birthday, String name, String address, double money) throws IllegalInitialValueException {
         super(accountNum, PIN, name, address, birthday, money);
     }
 

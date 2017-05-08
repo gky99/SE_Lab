@@ -22,6 +22,7 @@
 package Model.account;
 
 import Model.Manipulation;
+import Model.exceptions.IllegalInitialValueException;
 import Model.exceptions.IllegalTimeException;
 
 import java.util.Calendar;
@@ -34,7 +35,7 @@ public class SaverAccount extends Account {
     private static int minSubscribeTime = 5;
     private Vector<Manipulation> subscription;
 
-    public SaverAccount(int accountNum, String PIN, Date birthday, String name, String address, double money) {
+    public SaverAccount(int accountNum, String PIN, Date birthday, String name, String address, double money) throws IllegalInitialValueException {
         super(accountNum, PIN, name, address, birthday, money);
     }
 

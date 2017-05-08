@@ -23,6 +23,7 @@ package Model.account;
 
 import Model.Bank;
 import Model.exceptions.AccountSuspendedException;
+import Model.exceptions.IllegalInitialValueException;
 import Model.exceptions.OverdraftException;
 
 import java.util.Date;
@@ -45,7 +46,7 @@ public abstract class Account {
      * @param birthday
      * @param money
      */
-    public Account(int accountNumber, String PIN, String name, String address, Date birthday, double money) {
+    public Account(int accountNumber, String PIN, String name, String address, Date birthday, double money) throws IllegalInitialValueException {
         this.accountNumber = accountNumber;
         this.PIN = PIN;
         this.money = money;
@@ -53,6 +54,12 @@ public abstract class Account {
         this.address = address;
         this.birthday = birthday;
         this.suspend = false;
+        if (PIN.isEmpty()) {
+            throw new IllegalInitialValueException("PIN can not be empty.");
+        }
+        if (money < 0) {
+            throw new IllegalInitialValueException("Initial money should not smaller than 0.");
+        }
     }
 
     public static boolean checkCredit() {
