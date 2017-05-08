@@ -240,6 +240,21 @@ public class MainPage {
         money = inputDouble("Please input the amount of money you want to draw.");
         Manipulation manipulation = new Manipulation(account, -1, money);
 
+        return doManipulation(manipulation);
+    }
+
+    /**
+     *
+     */
+    public boolean deposit() {
+        double money;
+        money = inputDouble("Please input the amount of money you deposit.");
+        Manipulation manipulation = new Manipulation(-1, account, money);
+
+        return doManipulation(manipulation);
+    }
+
+    private boolean doManipulation(Manipulation manipulation) {
         try {
             if (manipulation.confirm()) {
                 System.out.println(manipulation.getResult());
@@ -258,19 +273,14 @@ public class MainPage {
     }
 
     /**
-     * @param amount
+     *
      */
-    public boolean instanceDeposit(double amount) {
-        // TODO - implement MainFrame.instanceDeposit
-        throw new UnsupportedOperationException();
-    }
+    public boolean depositFromCheque() {
+        double money;
+        money = inputDouble("Please input the amount of money you deposit.");
+        Manipulation manipulation = new Manipulation(-2, account, money);
 
-    /**
-     * @param amount
-     */
-    public boolean suspendDeposit(double amount) {
-        // TODO - implement MainFrame.suspendDeposit
-        throw new UnsupportedOperationException();
+        return doManipulation(manipulation);
     }
 
     public boolean suspend() {

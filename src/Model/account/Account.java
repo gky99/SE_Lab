@@ -67,6 +67,13 @@ public abstract class Account {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "account number:" + accountNumber +
+                " money:" + money +
+                " name:" + name;
+    }
+
     public String getPIN() {
 
         return PIN;

@@ -65,10 +65,18 @@ public class Bank {
 
     public static int clearFund() throws Exception {
         int i = 0;
-        for (Manipulation temp : suspended) {
-            if (temp.execute()) {
+        if (suspended.isEmpty()) {
+            return i;
+        }
+        int j = 0;
+        while (j < suspended.size()) {
+            Manipulation temp = suspended.get(j);
+            temp.confirm();
+            if (temp.isChangeFlag()) {
+                j++;
+            } else {
                 i++;
-                suspended.remove(temp);
+                suspended.remove(j);
             }
         }
         return i;

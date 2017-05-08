@@ -39,7 +39,6 @@ public class Manipulation {
     private String result;
     private boolean confirmed = false;
 
-
     public Manipulation(Account origin, Account destination, double money) {
         this.origin = origin;
         this.destination = destination;
@@ -94,6 +93,10 @@ public class Manipulation {
         this.subscribeTime = subscribeTime;
     }
 
+    public boolean isChangeFlag() {
+        return changeFlag;
+    }
+
     public boolean execute() throws UnchangeableException {
         try {
             origin.draw(money);
@@ -114,12 +117,18 @@ public class Manipulation {
             this.confirmed = true;
             if (this.subscribeTime != null) {
                 if (this.origin instanceof SaverAccount) {
-                    ((SaverAccount) this.origin).subscribe(this);
+                    if (this.destination.getAccountNumber() > 0) {
+                        Bank.suspended.add(this);
+                        this.result = "Subscribed.";
+                    } else {
+                        ((SaverAccount) this.origin).subscribe(this);
+                    }
                     Bank.manipulations.add(this);
                     return true;
                 } else {
                     if (subscribeTime.after(new Date())) {
                         Bank.suspended.add(this);
+                        this.result = "Subscribed.";
                         Bank.manipulations.add(this);
                         return true;
                     } else {
@@ -131,6 +140,7 @@ public class Manipulation {
 
             if (origin.getAccountNumber() < -1) {
                 Bank.suspended.add(this);
+                this.result = "Subscribed.";
                 return true;
             }
         }

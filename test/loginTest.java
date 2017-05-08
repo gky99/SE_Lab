@@ -28,7 +28,7 @@ import UI.MainPage;
  */
 public class loginTest {
     public static void main(String[] args) throws Exception {
-        Bank bank = new Bank();
+        new Bank();
         MainPage mainPage = new MainPage();
 
 //        mainPage.login();
@@ -37,7 +37,12 @@ public class loginTest {
         mainPage.account = Bank.openAccount("123", "234", 700, Bank.parseDate("1996.6.6"), "345", "current account");
         Bank.openAccount("aoe", "oeu", 700, Bank.parseDate("1996.10.10"), "eui", "saver account");
 
-        System.out.println(mainPage.draw());
+        boolean t = mainPage.depositFromCheque();
+        System.out.println("=============================");
+        System.out.println(t);
+        System.out.println("=============================");
+
+        Bank.clearFund();
 
         for (Account temp : Bank.accounts) {
             System.out.println(temp);
