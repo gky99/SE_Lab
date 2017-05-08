@@ -21,6 +21,7 @@
 
 package Model.account;
 
+import Model.Bank;
 import Model.exceptions.AccountSuspendedException;
 import Model.exceptions.OverdraftException;
 
@@ -89,6 +90,14 @@ public abstract class Account {
             money -= count;
             return this.money;
         }
+    }
+
+    public boolean closeAccount() {
+        if (this.getMoney() == 0) {
+            Bank.accounts.remove(this);
+            return true;
+        } else
+            return false;
     }
 
     public boolean setSuspend() {

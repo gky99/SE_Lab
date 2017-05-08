@@ -39,12 +39,43 @@ public class Manipulation {
     private String result;
 
 
+    public Manipulation(Account origin, Account destination, double money) {
+        this.origin = origin;
+        this.destination = destination;
+        this.money = money;
+        this.changeFlag = true;
+
+        Bank.manipulations.add(this);
+    }
+
+    public Manipulation(Account origin, int destination, double money) throws AccountNotFoundException {
+        this.origin = origin;
+        this.destination = Bank.findAccountByID(destination);
+        this.money = money;
+        this.changeFlag = true;
+        if (this.destination == null || this.origin == null) {
+            throw new AccountNotFoundException("No such account.");
+        }
+        Bank.manipulations.add(this);
+    }
+
+    public Manipulation(int origin, Account destination, double money) throws AccountNotFoundException {
+        this.origin = Bank.findAccountByID(origin);
+        this.destination = destination;
+        this.money = money;
+        this.changeFlag = true;
+        if (this.destination == null || this.origin == null) {
+            throw new AccountNotFoundException("No such account.");
+        }
+        Bank.manipulations.add(this);
+    }
+
     public Manipulation(int origin, int destination, double money) throws AccountNotFoundException {
         this.origin = Bank.findAccountByID(origin);
         this.destination = Bank.findAccountByID(destination);
         this.money = money;
         this.changeFlag = true;
-        if (this.destination == null) {
+        if (this.destination == null || this.origin == null) {
             throw new AccountNotFoundException("No such account.");
         }
         Bank.manipulations.add(this);
@@ -67,9 +98,6 @@ public class Manipulation {
     }
 
     public boolean execute() throws Exception {
-        if (subscribeTime.after(new Date())) {
-            return false;
-        }
         try {
             origin.draw(money);
             destination.save(money);
@@ -82,6 +110,20 @@ public class Manipulation {
             this.setResult("Failed. " + e.getMessage());
         } finally {
             return false;
+        }
+    }
+
+    public boolean confirm() throws Exception {
+        if (origin.getAccountNumber() == ) {
+
+        }
+        if (subscribeTime != null) {
+            if (subscribeTime.after(new Date())) {
+                return false;
+            }
+            else {
+                return execute();
+            }
         }
     }
 

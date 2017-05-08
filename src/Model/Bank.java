@@ -55,14 +55,15 @@ public class Bank {
         }
     }
 
-    public static int clearFund() {
-        // TODO - implement Model.Bank.clearFund
-        throw new UnsupportedOperationException();
-    }
-
-    public static int closeAccount() {
-        // TODO - implement Model.Bank.closeAccount
-        throw new UnsupportedOperationException();
+    public static int clearFund() throws Exception {
+        int i = 0;
+        for (Manipulation temp: suspended) {
+            if (temp.execute()) {
+                i++;
+                suspended.remove(temp);
+            }
+        }
+        return i;
     }
 
     public static Account findAccountByID(int accountNumber) {
@@ -108,15 +109,6 @@ public class Bank {
      */
     public boolean changeSuspend(int accountNumber) {
         // TODO - implement Model.Bank.changeSuspend
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * @param accountNumber
-     * @param amount
-     */
-    public int suspendedDeposit(int accountNumber, double amount) {
-        // TODO - implement Model.Bank.suspendedDeposit
-        throw new UnsupportedOperationException();
+        return true;
     }
 }
