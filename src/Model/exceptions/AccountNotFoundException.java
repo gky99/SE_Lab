@@ -22,9 +22,11 @@
 package Model.exceptions;
 
 /**
+ *
+ *
  * Created by gky on 2017/5/7.
  */
-public class AccountNotFoundException extends NullPointerException {
+public class AccountNotFoundException extends Exception {
     public AccountNotFoundException() {
     }
 

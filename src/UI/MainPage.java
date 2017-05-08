@@ -204,13 +204,18 @@ public class MainPage {
         String[] options = {
                 "current account",
                 "junior account",
-                "saver account"
+                "saver account",
+                "exit."
         };
-        String[] tempOps = new String[3];
-        for (int i = 0; i < options.length; i++) {
+        String[] tempOps = new String[options.length];
+        for (int i = 0; i < options.length - 1; i++) {
             tempOps[i] = "open a " + options[i] + ".";
         }
+        tempOps[options.length - 1] = options[options.length - 1];
         temp = inputOptionChoose(tempOps);
+        if (temp == options.length) {
+            return false;
+        }
         accountType = options[temp - 1];
 
         PIN = inputString(piy + "PIN.");
@@ -325,6 +330,8 @@ public class MainPage {
             }
 
             while (true) {
+                System.out.println("Account status:");
+                System.out.println(account);
                 if (account instanceof SaverAccount) {
                     String[] options = {
                             "draw.",
@@ -333,6 +340,7 @@ public class MainPage {
                             "suspend you account.",
                             "transfer.",
                             "subscribe.",
+                            "close account.",
                             "exit."
                     };
                     boolean exitFlag = false;
@@ -357,6 +365,11 @@ public class MainPage {
                             subscribe();
                             break;
                         case 7:
+                            if (closeAccount()) {
+                                exitFlag = true;
+                            }
+                            break;
+                        case 8:
                             exitFlag = true;
                             break;
                     }
@@ -370,6 +383,7 @@ public class MainPage {
                             "deposit from cheque.",
                             "suspend you account.",
                             "transfer.",
+                            "close account.",
                             "exit."
                     };
                     boolean exitFlag = false;
@@ -392,6 +406,11 @@ public class MainPage {
                             transfer();
                             break;
                         case 6:
+                            if (closeAccount()) {
+                                exitFlag = true;
+                            }
+                            break;
+                        case 7:
                             exitFlag = true;
                             break;
                     }
@@ -399,8 +418,6 @@ public class MainPage {
                         break;
                     }
                 }
-
-
             }
             account = null;
             try {
@@ -415,6 +432,7 @@ public class MainPage {
         int size = account.getSubscription().size();
         if (size == 0) {
             System.out.println("No subscription found.");
+            System.out.println();
             return false;
         } else {
             String[] options = new String[size + 1];
