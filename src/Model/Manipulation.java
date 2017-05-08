@@ -79,12 +79,22 @@ public class Manipulation {
         }
     }
 
-    public Manipulation(int origin, int destination, double money, Date subscribeTime) throws IllegalTimeException {
+    public Manipulation(int origin, int destination, double money, Date subscribeTime) {
         this(origin, destination, money);
         this.subscribeTime = subscribeTime;
     }
 
-    public boolean execute() throws Exception {
+    public Manipulation(Account origin, int destination, double money, Date subscribeTime) {
+        this(origin, destination, money);
+        this.subscribeTime = subscribeTime;
+    }
+
+    public Manipulation(int origin, Account destination, double money, Date subscribeTime) {
+        this(origin, destination, money);
+        this.subscribeTime = subscribeTime;
+    }
+
+    public boolean execute() throws UnchangeableException {
         try {
             origin.draw(money);
             destination.save(money);
@@ -95,12 +105,11 @@ public class Manipulation {
             this.setResult("Failed. " + e.getMessage());
         } catch (OverdraftException e) {
             this.setResult("Failed. " + e.getMessage());
-        } finally {
-            return false;
         }
+        return false;
     }
 
-    public boolean confirm() throws Exception {
+    public boolean confirm() throws IllegalTimeException, UnchangeableException {
         if (!this.confirmed) {
             this.confirmed = true;
             if (this.subscribeTime != null) {

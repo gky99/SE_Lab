@@ -22,9 +22,12 @@
 package UI;
 
 import Model.Bank;
+import Model.Manipulation;
 import Model.account.Account;
 import Model.exceptions.IllegalInitialValueException;
+import Model.exceptions.IllegalTimeException;
 import Model.exceptions.OverAgeException;
+import Model.exceptions.UnchangeableException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,7 +35,7 @@ import java.io.InputStreamReader;
 import java.util.Date;
 
 public class MainPage {
-    private Account account = null;
+    public Account account = null;
     private String piy = "Please input your ";
 
 
@@ -230,11 +233,28 @@ public class MainPage {
     }
 
     /**
-     * @param amount
+     *
      */
-    public boolean draw(double amount) {
-        // TODO - implement MainFrame.draw
-        throw new UnsupportedOperationException();
+    public boolean draw() {
+        double money;
+        money = inputDouble("Please input the amount of money you want to draw.");
+        Manipulation manipulation = new Manipulation(account, -1, money);
+
+        try {
+            if (manipulation.confirm()) {
+                System.out.println(manipulation.getResult());
+                return true;
+            } else {
+                System.out.println(manipulation.getResult());
+                return false;
+            }
+        } catch (IllegalTimeException e) {
+            System.out.println(e.getMessage());
+            return false;
+        } catch (UnchangeableException e) {
+            System.out.println("Manipulation unable to be changed");
+            return false;
+        }
     }
 
     /**

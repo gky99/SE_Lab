@@ -47,7 +47,11 @@ public class Bank {
             accounts.add(new VirtualAccount(-1, "cash"));
             accounts.add(new VirtualAccount(-2, "cheque"));
         } catch (Exception e) {
+            System.out.println("virtual account init error.");
         }
+    }
+
+    public Bank() {
     }
 
     public static Date parseDate(String s) throws ParseException {
