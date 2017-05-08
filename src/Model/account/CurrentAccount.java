@@ -28,7 +28,7 @@ import java.util.Date;
 public class CurrentAccount extends Account implements Overdraftable {
     private double overdraftLimit;
 
-    public CurrentAccount(int accountNum, String PIN, double money, String name, String address, Date birthday) {
+    public CurrentAccount(int accountNum, String PIN, Date birthday, String name, String address, double money) {
         super(accountNum, PIN, name, address, birthday, money);
         this.overdraftLimit = 0;
     }

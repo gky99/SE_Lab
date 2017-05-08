@@ -19,29 +19,17 @@
  *
  */
 
-package Model.account;
+import Model.Bank;
+import UI.MainPage;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+/**
+ * Created by Pauli on 2017/5/8.
+ */
+public class loginTest {
+    public static void main(String[] args) {
+        new Bank();
+        MainPage mainPage = new MainPage();
 
-public class JuniorAccount extends Account {
-    private static int ageLimit = 16;
-
-    public JuniorAccount(int accountNum, String PIN, Date birthday, String name, String address, double money) {
-        super(accountNum, PIN, name, address, birthday, money);
+        mainPage.login();
     }
-
-    /**
-     * @param birthday
-     */
-    public static boolean checkAge(Date birthday) {
-        Calendar today = new GregorianCalendar();
-        Calendar birth = new GregorianCalendar();
-        birth.setTime(birthday);
-
-        birth.add(Calendar.YEAR, ageLimit);
-        return today.before(birth);
-    }
-
 }

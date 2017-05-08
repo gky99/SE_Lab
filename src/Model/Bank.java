@@ -76,27 +76,28 @@ public class Bank {
     }
 
     /**
-     * @param money
+     * @param PIN
      * @param name
-     * @param address
+     * @param money
      * @param birthday
+     * @param address
      * @param accountType
      */
-    public Account openAccount(double money, String name, String address, Date birthday, String accountType) throws OverAgeException {
+    public static Account openAccount(String PIN, String name, double money, Date birthday, String address, String accountType) throws OverAgeException {
         Account temp = null;
         if (Account.checkCredit()) {
             if (accountType.equals("CurrentAccount")) {
-                temp = new CurrentAccount(accountNumber, money, name, address, birthday);
+                temp = new CurrentAccount(accountNumber, PIN, birthday, name, address, money);
                 Bank.accounts.add(temp);
             } else if (accountType.equals("JuniorAccount")) {
                 if (JuniorAccount.checkAge(birthday)) {
-                    temp = new JuniorAccount(accountNumber, money, name, address, birthday);
+                    temp = new JuniorAccount(accountNumber, PIN, birthday, name, address, money);
                     Bank.accounts.add(temp);
                 } else {
                     throw new OverAgeException("Age over 18");
                 }
             } else if (accountType.equals("SaverAccount")) {
-                temp = new SaverAccount(accountNumber, money, name, address, birthday);
+                temp = new SaverAccount(accountNumber, PIN, birthday, name, address, money);
                 Bank.accounts.add(temp);
             }
             accountNumber++;

@@ -27,12 +27,12 @@ import java.util.Date;
  * Created by gky on 2017/5/7.
  */
 public class VirtualAccount extends Account {
-    public VirtualAccount(int accountNumber, double money, String name, String address, Date birthday) {
-        super(accountNumber, "621454642345694", name, address, birthday, money);
+    private VirtualAccount(int accountNumber, Date birthday, String name, String address, double money) {
+        super(accountNumber, "123456", name, address, birthday, money);
     }
 
     public VirtualAccount(int accountNumber, String name) {
-        this(accountNumber, 99999, name, null, null);
+        this(accountNumber, null, name, null, 99999);
     }
 
 

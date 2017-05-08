@@ -34,7 +34,7 @@ public class SaverAccount extends Account {
     private static int minSubscribeTime = 5;
     private Vector<Manipulation> subscription;
 
-    public SaverAccount(int accountNum, String PIN, double money, String name, String address, Date birthday) {
+    public SaverAccount(int accountNum, String PIN, Date birthday, String name, String address, double money) {
         super(accountNum, PIN, name, address, birthday, money);
     }
 

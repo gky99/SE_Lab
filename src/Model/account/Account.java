@@ -36,7 +36,6 @@ public abstract class Account {
     private String PIN;
     private String address;
     private Date birthday;
-
     private boolean suspend;
 
     /**
@@ -59,6 +58,15 @@ public abstract class Account {
     public static boolean checkCredit() {
 
         return true;
+    }
+
+    public String getPIN() {
+
+        return PIN;
+    }
+
+    public void setPIN(String PIN) {
+        this.PIN = PIN;
     }
 
     /**
