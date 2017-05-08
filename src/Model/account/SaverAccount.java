@@ -33,10 +33,14 @@ import java.util.Vector;
 public class SaverAccount extends Account {
 
     private static int minSubscribeTime = 5;
-    private Vector<Manipulation> subscription;
+    private Vector<Manipulation> subscription = new Vector<Manipulation>();
 
     public SaverAccount(int accountNum, String PIN, Date birthday, String name, String address, double money) throws IllegalInitialValueException {
         super(accountNum, PIN, name, address, birthday, money);
+    }
+
+    public Vector<Manipulation> getSubscription() {
+        return subscription;
     }
 
     public void subscribe(Manipulation man) throws IllegalTimeException {

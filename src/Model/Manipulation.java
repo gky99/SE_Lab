@@ -122,6 +122,7 @@ public class Manipulation {
                         this.result = "Subscribed.";
                     } else {
                         ((SaverAccount) this.origin).subscribe(this);
+                        this.result = "Subscribed.";
                     }
                     Bank.manipulations.add(this);
                     return true;

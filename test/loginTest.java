@@ -20,7 +20,9 @@
  */
 
 import Model.Bank;
+import Model.Manipulation;
 import Model.account.Account;
+import Model.account.SaverAccount;
 import UI.MainPage;
 
 /**
@@ -34,18 +36,24 @@ public class loginTest {
 //        mainPage.login();
 //        mainPage.openAccount();
 
-        mainPage.account = Bank.openAccount("123", "234", 700, Bank.parseDate("1996.6.6"), "345", "current account");
-        Bank.openAccount("aoe", "oeu", 700, Bank.parseDate("1996.10.10"), "eui", "saver account");
+        Bank.openAccount("123", "234", 700, Bank.parseDate("1996.6.6"), "345", "current account");
+        mainPage.account = Bank.openAccount("aoe", "oeu", 700, Bank.parseDate("1996.10.10"), "eui", "saver account");
 
-        boolean t = mainPage.depositFromCheque();
-        System.out.println("=============================");
-        System.out.println(t);
+        boolean t = mainPage.transfer();
         System.out.println("=============================");
 
         Bank.clearFund();
 
         for (Account temp : Bank.accounts) {
             System.out.println(temp);
+        }
+
+        if (mainPage.account instanceof SaverAccount) {
+            SaverAccount saverAccount = (SaverAccount) mainPage.account;
+
+            for (Manipulation temp : saverAccount.getSubscription()) {
+                System.out.println(temp);
+            }
         }
     }
 }

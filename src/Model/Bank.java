@@ -121,11 +121,4 @@ public class Bank {
         return temp;
     }
 
-    /**
-     * @param accountNumber
-     */
-    public boolean changeSuspend(int accountNumber) {
-        // TODO - implement Model.Bank.changeSuspend
-        return true;
-    }
 }

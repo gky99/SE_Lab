@@ -24,10 +24,7 @@ package UI;
 import Model.Bank;
 import Model.Manipulation;
 import Model.account.Account;
-import Model.exceptions.IllegalInitialValueException;
-import Model.exceptions.IllegalTimeException;
-import Model.exceptions.OverAgeException;
-import Model.exceptions.UnchangeableException;
+import Model.exceptions.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -237,7 +234,7 @@ public class MainPage {
      */
     public boolean draw() {
         double money;
-        money = inputDouble("Please input the amount of money you want to draw.");
+        money = inputDouble("Please input the amount of money you want to draw:");
         Manipulation manipulation = new Manipulation(account, -1, money);
 
         return doManipulation(manipulation);
@@ -248,7 +245,7 @@ public class MainPage {
      */
     public boolean deposit() {
         double money;
-        money = inputDouble("Please input the amount of money you deposit.");
+        money = inputDouble("Please input the amount of money you deposit:");
         Manipulation manipulation = new Manipulation(-1, account, money);
 
         return doManipulation(manipulation);
@@ -277,37 +274,69 @@ public class MainPage {
      */
     public boolean depositFromCheque() {
         double money;
-        money = inputDouble("Please input the amount of money you deposit.");
+        money = inputDouble("Please input the amount of money you deposit:");
         Manipulation manipulation = new Manipulation(-2, account, money);
 
         return doManipulation(manipulation);
     }
 
     public boolean suspend() {
-        // TODO - implement MainFrame.suspend
-        throw new UnsupportedOperationException();
+        account.setSuspend();
+        if (account.isSuspend()) {
+            System.out.println("Your account is suspended.");
+        } else {
+            System.out.println("Your account is recovered from suspended.");
+        }
+        return account.isSuspend();
     }
 
     /**
-     * @param amount
-     * @param time
+     *
      */
-    public void subscribe(double amount, Date time) {
-        // TODO - implement MainFrame.subscribe
-        throw new UnsupportedOperationException();
+    public boolean subscribe() {
+        Date time;
+        double amount;
+        time = inputDate("Please input the date you want to withdraw your money:");
+        amount = inputDouble("Please input the amount of money you want to withdraw:");
+        Manipulation manipulation = new Manipulation(account, -1, amount, time);
+
+        return doManipulation(manipulation);
     }
 
     public void actions() {
-        // TODO - implement MainFrame.actions
-        throw new UnsupportedOperationException();
+        while (true) {
+            String[] options = {
+                    "log into your account.",
+                    "open a new account."
+            };
+
+        }
+    }
+
+    public boolean subscribedDraw() {
+
+    }
+
+    public boolean closeAccount() {
+
     }
 
     /**
-     * @param amount
-     * @param accountNumber
+     *
      */
-    public boolean transfer(double amount, int accountNumber) {
-        // TODO - implement MainFrame.transfer
-        throw new UnsupportedOperationException();
+    public boolean transfer() {
+        int destination;
+        double amount;
+        destination = inputInt("Please input the target account number:");
+        amount = inputDouble("Please input the amount of money you want to transfer:");
+        Manipulation manipulation;
+        try {
+            manipulation = new Manipulation(account, destination, amount);
+        } catch (AccountNotFoundException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+
+        return doManipulation(manipulation);
     }
 }
