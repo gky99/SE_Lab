@@ -19,11 +19,11 @@
  *
  */
 
-package Model;
+package Bank.Model;
 
-import Model.account.*;
-import Model.exceptions.IllegalInitialValueException;
-import Model.exceptions.OverAgeException;
+import Bank.Model.account.*;
+import Bank.Model.exceptions.IllegalInitialValueException;
+import Bank.Model.exceptions.OverAgeException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

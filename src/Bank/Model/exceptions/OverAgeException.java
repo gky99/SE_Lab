@@ -19,16 +19,17 @@
  *
  */
 
-package Model.exceptions;
+package Bank.Model.exceptions;
 
 /**
+ * Thrown when try to create a junior account with age older than the limit.
  * Created by gky on 2017/5/7.
  */
-public class UnchangeableException extends RuntimeException {
-    public UnchangeableException() {
+public class OverAgeException extends Exception {
+    public OverAgeException() {
     }
 
-    public UnchangeableException(String message) {
+    public OverAgeException(String message) {
         super(message);
     }
 }

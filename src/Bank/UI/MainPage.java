@@ -19,15 +19,15 @@
  *
  */
 
-package UI;
+package Bank.UI;
 
-import Model.Bank;
-import Model.Manipulation;
-import Model.account.Account;
-import Model.account.SaverAccount;
-import Model.exceptions.AccountNotFoundException;
-import Model.exceptions.IllegalInitialValueException;
-import Model.exceptions.OverAgeException;
+import Bank.Model.Bank;
+import Bank.Model.Manipulation;
+import Bank.Model.account.Account;
+import Bank.Model.account.SaverAccount;
+import Bank.Model.exceptions.AccountNotFoundException;
+import Bank.Model.exceptions.IllegalInitialValueException;
+import Bank.Model.exceptions.OverAgeException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -240,9 +240,9 @@ public class MainPage {
     /**
      *
      */
-    public boolean draw() {
+    public boolean withdraw() {
         double money;
-        money = inputDouble("Please input the amount of money you want to draw:");
+        money = inputDouble("Please input the amount of money you want to withdraw:");
         Manipulation manipulation = new Manipulation(account, -1, money);
 
         return doManipulation(manipulation);
@@ -337,7 +337,7 @@ public class MainPage {
                 System.out.println(account);
                 if (account instanceof SaverAccount) {
                     String[] options = {
-                            "draw.",
+                            "withdraw.",
                             "deposit.",
                             "deposit from cheque.",
                             "suspend you account.",
@@ -350,7 +350,7 @@ public class MainPage {
                     int option = inputOptionChoose(options);
                     switch (option) {
                         case 1:
-                            subscribedDraw((SaverAccount) account);
+                            subscribedWithDraw((SaverAccount) account);
                             break;
                         case 2:
                             deposit();
@@ -381,7 +381,7 @@ public class MainPage {
                     }
                 } else {
                     String[] options = {
-                            "draw.",
+                            "withdraw.",
                             "deposit.",
                             "deposit from cheque.",
                             "suspend you account.",
@@ -394,7 +394,7 @@ public class MainPage {
 
                     switch (option) {
                         case 1:
-                            draw();
+                            withdraw();
                             break;
                         case 2:
                             deposit();
@@ -431,7 +431,7 @@ public class MainPage {
         }
     }
 
-    public boolean subscribedDraw(SaverAccount account) {
+    public boolean subscribedWithDraw(SaverAccount account) {
         int size = account.getSubscription().size();
         if (size == 0) {
             System.out.println("No subscription found.");

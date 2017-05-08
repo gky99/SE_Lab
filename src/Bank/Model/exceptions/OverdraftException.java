@@ -19,15 +19,17 @@
  *
  */
 
-package Model.account;
+package Bank.Model.exceptions;
 
 /**
- * This interface is imposed to account types that can overdraft.
+ * Thrown when user want to withdraw money exceed the overdraft limit.
  * Created by gky on 2017/5/7.
  */
-public interface Overdraftable {
+public class OverdraftException extends Exception {
+    public OverdraftException() {
+    }
 
-    double getOverdraftLimit();
-
-    void setOverdraftLimit(double overdraftLimit);
+    public OverdraftException(String message) {
+        super(message);
+    }
 }

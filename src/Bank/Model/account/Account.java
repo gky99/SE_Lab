@@ -19,12 +19,12 @@
  *
  */
 
-package Model.account;
+package Bank.Model.account;
 
-import Model.Bank;
-import Model.exceptions.AccountSuspendedException;
-import Model.exceptions.IllegalInitialValueException;
-import Model.exceptions.OverdraftException;
+import Bank.Model.Bank;
+import Bank.Model.exceptions.AccountSuspendedException;
+import Bank.Model.exceptions.IllegalInitialValueException;
+import Bank.Model.exceptions.OverdraftException;
 
 import java.util.Date;
 
@@ -114,7 +114,7 @@ public abstract class Account {
      * @throws AccountSuspendedException Throws when account is suspended.
      * @throws OverdraftException        Throws when the overdraft limit is exceeded. For classes do not impose {@link Overdraftable}, the overdraft limit is seen as 0.
      */
-    public double draw(double count) throws AccountSuspendedException, OverdraftException {
+    public double withdraw(double count) throws AccountSuspendedException, OverdraftException {
         if (suspend) {
             throw new AccountSuspendedException("Account is suspended.");
         } else {

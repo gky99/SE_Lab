@@ -19,11 +19,11 @@
  *
  */
 
-package Model.account;
+package Bank.Model.account;
 
-import Model.Manipulation;
-import Model.exceptions.IllegalInitialValueException;
-import Model.exceptions.IllegalTimeException;
+import Bank.Model.Manipulation;
+import Bank.Model.exceptions.IllegalInitialValueException;
+import Bank.Model.exceptions.IllegalTimeException;
 
 import java.util.Calendar;
 import java.util.Date;

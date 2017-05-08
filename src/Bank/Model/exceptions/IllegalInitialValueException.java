@@ -19,7 +19,7 @@
  *
  */
 
-package Model.exceptions;
+package Bank.Model.exceptions;
 
 /**
  * Thrown when the initial value is illegal.

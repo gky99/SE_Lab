@@ -19,17 +19,18 @@
  *
  */
 
-package Model.exceptions;
+package Bank.Model.exceptions;
 
 /**
- * Thrown when try to create a junior account with age older than the limit.
+ * Thrown when the account with the input account number is not found.
+ * <p>
  * Created by gky on 2017/5/7.
  */
-public class OverAgeException extends Exception {
-    public OverAgeException() {
+public class AccountNotFoundException extends RuntimeException {
+    public AccountNotFoundException() {
     }
 
-    public OverAgeException(String message) {
+    public AccountNotFoundException(String message) {
         super(message);
     }
 }

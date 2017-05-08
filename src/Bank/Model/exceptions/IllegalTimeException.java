@@ -19,17 +19,17 @@
  *
  */
 
-package Model.exceptions;
+package Bank.Model.exceptions;
 
 /**
- * Thrown when user want to withdraw money exceed the overdraft limit.
+ * Thrown when the subscribed time is illegal
  * Created by gky on 2017/5/7.
  */
-public class OverdraftException extends Exception {
-    public OverdraftException() {
+public class IllegalTimeException extends Exception {
+    public IllegalTimeException() {
     }
 
-    public OverdraftException(String message) {
+    public IllegalTimeException(String message) {
         super(message);
     }
 }

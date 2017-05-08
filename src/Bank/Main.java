@@ -19,18 +19,16 @@
  *
  */
 
-package Model.exceptions;
+package Bank;
 
-/**
- * Thrown when try to manipulate a suspended account.
- * Created by gky on 2017/5/7.
- */
-public class AccountSuspendedException extends Exception {
-    public AccountSuspendedException() {
-        super();
-    }
+import Bank.Model.Bank;
+import Bank.UI.MainPage;
 
-    public AccountSuspendedException(String message) {
-        super(message);
+public class Main {
+    public static void main(String[] args) {
+        new Bank();
+        MainPage mainPage = new MainPage();
+
+        mainPage.actions();
     }
 }

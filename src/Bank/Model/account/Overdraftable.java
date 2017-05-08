@@ -19,14 +19,15 @@
  *
  */
 
-import Model.Bank;
-import UI.MainPage;
+package Bank.Model.account;
 
-public class Main {
-    public static void main(String[] args) {
-        new Bank();
-        MainPage mainPage = new MainPage();
+/**
+ * This interface is imposed to account types that can overdraft.
+ * Created by gky on 2017/5/7.
+ */
+public interface Overdraftable {
 
-        mainPage.actions();
-    }
+    double getOverdraftLimit();
+
+    void setOverdraftLimit(double overdraftLimit);
 }

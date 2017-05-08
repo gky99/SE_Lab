@@ -39,7 +39,7 @@
     </properties>
   </component>
   <component name="JavadocGenerationManager">
-    <option name="OUTPUT_DIRECTORY" value="$USER_HOME$/Desktop/tryJfinal/out/artifacts/tryJfinal_jar/javadoc" />
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/out/javadoc" />
     <option name="OPTION_SCOPE" value="package" />
     <option name="OPTION_HIERARCHY" value="true" />
     <option name="OPTION_NAVIGATOR" value="true" />

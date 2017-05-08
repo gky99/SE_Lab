@@ -19,42 +19,38 @@
  *
  */
 
-package Model.account;
+package Bank.Model.account;
 
-import Model.Bank;
-import Model.exceptions.IllegalInitialValueException;
+import Bank.Model.exceptions.IllegalInitialValueException;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
-public class CurrentAccount extends Account implements Overdraftable {
-    private double overdraftLimit;
+public class JuniorAccount extends Account {
+    private static int ageLimit = 16;
 
     /**
      * {@inheritDoc}
      *
      * @see Account#Account(int, String, String, String, Date, double)
      */
-    public CurrentAccount(int accountNum, String PIN, Date birthday, String name, String address, double money) throws IllegalInitialValueException {
+    public JuniorAccount(int accountNum, String PIN, Date birthday, String name, String address, double money) throws IllegalInitialValueException {
         super(accountNum, PIN, name, address, birthday, money);
-        this.overdraftLimit = 0;
     }
 
-    public static void main(String[] args) throws Exception {
-        System.out.println("Compile Success");
+    /**
+     * Check the birthday to find whether the age of the user is allowed to open a junior account.
+     *
+     * @return if age limitation is satisfied, return true.
+     */
+    public static boolean checkAge(Date birthday) {
+        Calendar today = new GregorianCalendar();
+        Calendar birth = new GregorianCalendar();
+        birth.setTime(birthday);
 
-        String date = "1999.5.8";
-        System.out.println(Bank.parseDate(date));
-        Date d = Bank.parseDate(date);
-        System.out.println(JuniorAccount.checkAge(d));
+        birth.add(Calendar.YEAR, ageLimit);
+        return today.before(birth);
     }
 
-    @Override
-    public double getOverdraftLimit() {
-        return overdraftLimit;
-    }
-
-    @Override
-    public void setOverdraftLimit(double overdraftLimit) {
-        this.overdraftLimit = overdraftLimit;
-    }
 }

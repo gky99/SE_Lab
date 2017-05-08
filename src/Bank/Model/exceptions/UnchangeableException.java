@@ -19,17 +19,16 @@
  *
  */
 
-package Model.exceptions;
+package Bank.Model.exceptions;
 
 /**
- * Thrown when the subscribed time is illegal
  * Created by gky on 2017/5/7.
  */
-public class IllegalTimeException extends Exception {
-    public IllegalTimeException() {
+public class UnchangeableException extends RuntimeException {
+    public UnchangeableException() {
     }
 
-    public IllegalTimeException(String message) {
+    public UnchangeableException(String message) {
         super(message);
     }
 }

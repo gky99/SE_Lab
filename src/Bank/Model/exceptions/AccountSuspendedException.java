@@ -19,18 +19,18 @@
  *
  */
 
-package Model.exceptions;
+package Bank.Model.exceptions;
 
 /**
- * Thrown when the account with the input account number is not found.
- * <p>
+ * Thrown when try to manipulate a suspended account.
  * Created by gky on 2017/5/7.
  */
-public class AccountNotFoundException extends RuntimeException {
-    public AccountNotFoundException() {
+public class AccountSuspendedException extends Exception {
+    public AccountSuspendedException() {
+        super();
     }
 
-    public AccountNotFoundException(String message) {
+    public AccountSuspendedException(String message) {
         super(message);
     }
 }

@@ -19,7 +19,7 @@
  *
  */
 
-package Model.account;
+package Bank.Model.account;
 
 import java.util.Date;
 
@@ -38,9 +38,9 @@ public class VirtualAccount extends Account {
 
 
     @Override
-    public double draw(double count) {
+    public double withdraw(double count) {
         try {
-            return super.draw(0);
+            return super.withdraw(0);
         } catch (Exception e) {
 
         }

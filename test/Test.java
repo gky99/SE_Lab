@@ -19,17 +19,17 @@
  *
  */
 
-import Model.Bank;
-import Model.Manipulation;
-import Model.account.Account;
-import Model.account.CurrentAccount;
-import Model.account.SaverAccount;
-import UI.MainPage;
+import Bank.Model.Bank;
+import Bank.Model.Manipulation;
+import Bank.Model.account.Account;
+import Bank.Model.account.CurrentAccount;
+import Bank.Model.account.SaverAccount;
+import Bank.UI.MainPage;
 
 /**
  * Created by Pauli on 2017/5/8.
  */
-public class loginTest {
+public class Test {
     public static void main(String[] args) throws Exception {
         new Bank();
         MainPage mainPage = new MainPage();

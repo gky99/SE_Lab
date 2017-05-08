@@ -19,11 +19,11 @@
  *
  */
 
-package Model;
+package Bank.Model;
 
-import Model.account.Account;
-import Model.account.SaverAccount;
-import Model.exceptions.*;
+import Bank.Model.account.Account;
+import Bank.Model.account.SaverAccount;
+import Bank.Model.exceptions.*;
 
 import java.util.Date;
 
@@ -173,7 +173,7 @@ public class Manipulation {
      */
     public boolean execute() throws UnchangeableException {
         try {
-            origin.draw(money);
+            origin.withdraw(money);
             destination.save(money);
             this.setResult("Success.");
 
