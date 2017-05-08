@@ -22,6 +22,7 @@
 package Model.exceptions;
 
 /**
+ * Thrown when try to create a junior account with age older than the limit.
  * Created by gky on 2017/5/7.
  */
 public class OverAgeException extends Exception {

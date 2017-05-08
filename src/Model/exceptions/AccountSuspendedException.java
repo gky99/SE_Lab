@@ -22,6 +22,7 @@
 package Model.exceptions;
 
 /**
+ * Thrown when try to manipulate a suspended account.
  * Created by gky on 2017/5/7.
  */
 public class AccountSuspendedException extends Exception {

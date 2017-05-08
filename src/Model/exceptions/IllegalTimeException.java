@@ -22,6 +22,7 @@
 package Model.exceptions;
 
 /**
+ * Thrown when the subscribed time is illegal
  * Created by gky on 2017/5/7.
  */
 public class IllegalTimeException extends Exception {

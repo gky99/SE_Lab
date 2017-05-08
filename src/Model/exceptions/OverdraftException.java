@@ -22,6 +22,7 @@
 package Model.exceptions;
 
 /**
+ * Thrown when user want to withdraw money exceed the overdraft limit.
  * Created by gky on 2017/5/7.
  */
 public class OverdraftException extends Exception {

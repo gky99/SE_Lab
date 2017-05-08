@@ -22,6 +22,7 @@
 package Model.exceptions;
 
 /**
+ * Thrown when the initial value is illegal.
  * Created by Pauli on 2017/5/8.
  */
 public class IllegalInitialValueException extends Exception {

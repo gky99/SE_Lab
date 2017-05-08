@@ -22,11 +22,11 @@
 package Model.exceptions;
 
 /**
- *
+ * Thrown when the account with the input account number is not found.
  *
  * Created by gky on 2017/5/7.
  */
-public class AccountNotFoundException extends Exception {
+public class AccountNotFoundException extends RuntimeException {
     public AccountNotFoundException() {
     }
 

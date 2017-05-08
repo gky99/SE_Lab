@@ -24,7 +24,7 @@ package Model.exceptions;
 /**
  * Created by gky on 2017/5/7.
  */
-public class UnchangeableException extends Exception {
+public class UnchangeableException extends RuntimeException {
     public UnchangeableException() {
     }
 
