@@ -39,21 +39,23 @@ public class loginTest {
         Bank.openAccount("123", "234", 700, Bank.parseDate("1996.6.6"), "345", "current account");
         mainPage.account = Bank.openAccount("aoe", "oeu", 700, Bank.parseDate("1996.10.10"), "eui", "saver account");
 
-        boolean t = mainPage.transfer();
-        System.out.println("=============================");
+        mainPage.actions();
 
-        Bank.clearFund();
+//        boolean t = mainPage.transfer();
+//        System.out.println("=============================");
 
-        for (Account temp : Bank.accounts) {
-            System.out.println(temp);
-        }
-
-        if (mainPage.account instanceof SaverAccount) {
-            SaverAccount saverAccount = (SaverAccount) mainPage.account;
-
-            for (Manipulation temp : saverAccount.getSubscription()) {
-                System.out.println(temp);
-            }
-        }
+//        Bank.clearFund();
+//
+//        for (Account temp : Bank.accounts) {
+//            System.out.println(temp);
+//        }
+//
+//        if (mainPage.account instanceof SaverAccount) {
+//            SaverAccount saverAccount = (SaverAccount) mainPage.account;
+//
+//            for (Manipulation temp : saverAccount.getSubscription()) {
+//                System.out.println(temp);
+//            }
+//        }
     }
 }

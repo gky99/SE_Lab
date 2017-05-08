@@ -306,22 +306,128 @@ public class MainPage {
 
     public void actions() {
         while (true) {
-            String[] options = {
-                    "log into your account.",
-                    "open a new account."
-            };
+            while (true) {
+                String[] options = {
+                        "log into your account.",
+                        "open a new account.",
+                        "exit."
+                };
+                int option = inputOptionChoose(options);
+                if (option == 1) {
+                    if (login())
+                        break;
+                } else if (option == 2) {
+                    if (openAccount())
+                        break;
+                } else if (option == 3) {
+                    System.exit(0);
+                }
+            }
 
+            while (true) {
+                if (account instanceof SaverAccount) {
+                    String[] options = {
+                            "draw.",
+                            "deposit.",
+                            "deposit from cheque.",
+                            "suspend you account.",
+                            "transfer.",
+                            "subscribe.",
+                            "exit."
+                    };
+                    boolean exitFlag = false;
+                    int option = inputOptionChoose(options);
+                    switch (option) {
+                        case 1:
+                            subscribedDraw((SaverAccount) account);
+                            break;
+                        case 2:
+                            deposit();
+                            break;
+                        case 3:
+                            depositFromCheque();
+                            break;
+                        case 4:
+                            suspend();
+                            break;
+                        case 5:
+                            transfer();
+                            break;
+                        case 6:
+                            subscribe();
+                            break;
+                        case 7:
+                            exitFlag = true;
+                            break;
+                    }
+                    if (exitFlag) {
+                        break;
+                    }
+                } else {
+                    String[] options = {
+                            "draw.",
+                            "deposit.",
+                            "deposit from cheque.",
+                            "suspend you account.",
+                            "transfer.",
+                            "exit."
+                    };
+                    boolean exitFlag = false;
+                    int option = inputOptionChoose(options);
+
+                    switch (option) {
+                        case 1:
+                            draw();
+                            break;
+                        case 2:
+                            deposit();
+                            break;
+                        case 3:
+                            depositFromCheque();
+                            break;
+                        case 4:
+                            suspend();
+                            break;
+                        case 5:
+                            transfer();
+                            break;
+                        case 6:
+                            exitFlag = true;
+                            break;
+                    }
+                    if (exitFlag) {
+                        break;
+                    }
+                }
+
+
+            }
+            account = null;
+            try {
+                Bank.clearFund();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
     public boolean subscribedDraw(SaverAccount account) {
-        String[] options = new String[account.getSubscription().size()];
-        for (Manipulation temp : account.getSubscription()) {
-            options[account.getSubscription().indexOf(temp)] = "choose subscription:\n" + temp.toString();
+        int size = account.getSubscription().size();
+        if (size == 0) {
+            System.out.println("No subscription found.");
+            return false;
+        } else {
+            String[] options = new String[size + 1];
+            for (Manipulation temp : account.getSubscription()) {
+                options[account.getSubscription().indexOf(temp)] = "choose subscription:\n" + temp.toString();
+            }
+            options[size] = "exit.";
+            int temp = inputOptionChoose(options);
+            if (temp == size + 1) {
+                return false;
+            }
+            return doManipulation(account.getSubscription().get(temp - 1));
         }
-        int temp = inputOptionChoose(options);
-
-        return doManipulation(account.getSubscription().get(temp - 1));
     }
 
     public boolean closeAccount() {

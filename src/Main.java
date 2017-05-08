@@ -19,8 +19,14 @@
  *
  */
 
+import Model.Bank;
+import UI.MainPage;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello World!a");
+        new Bank();
+        MainPage mainPage = new MainPage();
+
+        mainPage.actions();
     }
 }

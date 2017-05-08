@@ -97,7 +97,7 @@ public class Manipulation {
     public String toString() {
         return "From: " + origin.getName() +
                 " To: " + destination.getName() +
-                " Amount: " + money +
+                "    Amount: " + money +
                 "Subscribe time:" + subscribeTime;
     }
 
@@ -154,6 +154,9 @@ public class Manipulation {
             }
         }
         if (subscribeTime != null && subscribeTime.after(new Date())) {
+            if (this.origin instanceof SaverAccount) {
+                this.result = "Subscription time does not come.";
+            }
             return false;
         } else
             return execute();
