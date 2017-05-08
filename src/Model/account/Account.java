@@ -33,19 +33,22 @@ public abstract class Account {
 
     private double money = 0;
     private String name;
+    private String PIN;
     private String address;
     private Date birthday;
 
     private boolean suspend;
 
     /**
-     * @param money
+     * @param PIN
      * @param name
      * @param address
      * @param birthday
+     * @param money
      */
-    public Account(int accountNumber, double money, String name, String address, Date birthday) {
+    public Account(int accountNumber, String PIN, String name, String address, Date birthday, double money) {
         this.accountNumber = accountNumber;
+        this.PIN = PIN;
         this.money = money;
         this.name = name;
         this.address = address;

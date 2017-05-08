@@ -34,8 +34,8 @@ public class SaverAccount extends Account {
     private static int minSubscribeTime = 5;
     private Vector<Manipulation> subscription;
 
-    public SaverAccount(int accountNum, double money, String name, String address, Date birthday) {
-        super(accountNum, money, name, address, birthday);
+    public SaverAccount(int accountNum, String PIN, double money, String name, String address, Date birthday) {
+        super(accountNum, PIN, name, address, birthday, money);
     }
 
     public void subscribe(Manipulation man) throws IllegalTimeException {

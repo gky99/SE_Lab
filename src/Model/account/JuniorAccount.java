@@ -28,8 +28,8 @@ import java.util.GregorianCalendar;
 public class JuniorAccount extends Account {
     private static int ageLimit = 16;
 
-    public JuniorAccount(int accountNum, double money, String name, String address, Date birthday) {
-        super(accountNum, money, name, address, birthday);
+    public JuniorAccount(int accountNum, String PIN, double money, String name, String address, Date birthday) {
+        super(accountNum, PIN, name, address, birthday, money);
     }
 
     /**

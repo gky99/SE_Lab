@@ -20,7 +20,6 @@
  */
 
 public class Main {
-    //todo 不知道应该干什么
     public static void main(String[] args) {
         System.out.println("Hello World!a");
     }

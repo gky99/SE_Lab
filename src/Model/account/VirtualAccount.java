@@ -28,7 +28,7 @@ import java.util.Date;
  */
 public class VirtualAccount extends Account {
     public VirtualAccount(int accountNumber, double money, String name, String address, Date birthday) {
-        super(accountNumber, money, name, address, birthday);
+        super(accountNumber, "621454642345694", name, address, birthday, money);
     }
 
     public VirtualAccount(int accountNumber, String name) {
